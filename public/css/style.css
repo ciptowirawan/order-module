@@ -1,0 +1,384 @@
+* {
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.event-content {
+    width: 100%;
+    max-width: 1080px;
+    margin: 0 auto;
+}
+
+/* Welcome Page Styles */
+.mobile-navigation {
+    display: none;
+    width: 100%;
+    max-width: 1080px;
+    margin: 0 auto;
+}
+
+.mobile-navigation .nav-link, .mobile-navigation a{
+    color: black !important;
+    text-decoration: none;
+}
+
+.mobile-navigation .collapse-item {
+    margin-left: 4%;
+    color: rgb(15, 15, 15) !important;
+    font-weight: 600;
+}
+
+.top-banner {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    background: linear-gradient(70deg, #ab65b9, #4c076b 70%);
+    padding: 10px 0px 0px 0px;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;    
+    width: 100%;
+    max-width: 1080px;
+    margin: 0 auto;
+}
+
+.register-button {
+    padding: 5px 30px 5px 30px;
+    background: #5CA4B8;
+    font-weight: 700;
+    font-family: 'Helvetica';
+    font-size: 18px;
+    color: white;
+    margin-left: 20px;
+}
+
+
+.top-banner p {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.top-header {
+    width: 100%;
+    max-width: 1080px;
+    margin: 0 auto;
+}
+
+.top-header h1 {
+    padding-left: 10px;
+}
+
+.header-title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.header-title ul {
+    padding-left: 0;
+    list-style-type: none;
+}
+
+.sidebar {
+    background: linear-gradient(70deg, #811297 10%, #4c076b 40%);
+}
+
+#myTopnav .dropdown {
+    font-weight: bold !important;
+    display: flex;
+    flex-direction: row;
+}
+
+.beneficial-card .card-title {
+    font-size: 24px;
+}
+
+.beneficial-card .card-body i {
+    margin-bottom: 6%;
+    color: #FFFFFF;
+}
+
+@media screen and (max-width: 767px) {
+    .topnav .dropdown button {display: none;}
+
+    .responsive {position: relative; display: block; }
+
+    .pricing-button .col-md-4:not(:first-child) {
+        margin-top: 2%;
+    }
+
+    .fa-user {
+        display: none !important;
+    }
+}
+@media screen and (min-width: 768px) {
+    .mobile-navigation .dropdown {display: inline-block;} 
+  }
+
+
+.card-header h6 {
+    color: #882fb1;
+}
+
+
+.top-header .topnav {
+    display: flex;
+    flex-direction: row;
+
+}
+
+.top-navigation .dropdown .btn {
+    font-weight: bold;
+    text-align: left;
+}
+
+.title {
+    padding: 7% 10px 7% 10px;
+    background: linear-gradient(70deg, #7a1ee2, #1a2abd 70%);
+    color: white;
+    width: 100%;
+}
+
+.title h1 {
+    font-size: 50px;
+}
+
+.title h6 {
+    font-family: 'Calson Pro Italic';
+    font-style: italic;
+    font-size: 30px;
+}
+
+.input-group option {
+    font-size: 20px;
+}
+
+form[method=post] input[type=text] {
+    text-transform: uppercase;
+}
+
+.phone-input{
+    padding: 0 !important; 
+    --bs-gutter-x: 0;
+}
+
+.terms {
+    margin: 5% 0 0 0 !important;
+}
+.conditions {
+    margin: 5% 0 0 0 !important;
+}
+
+.invalid-feedback {
+    display: block;
+}
+
+.small-hr {
+    border: 2px solid #5CA4B8 !important;
+    width: 5%;
+    opacity: 100%;
+    
+}
+
+.title-text {
+    padding-left: 20px;
+}
+
+.card-group {
+    width: 90%;
+    /* margin: 0 5% 0 5%; */
+}
+
+.nopadding {
+    padding: 0 !important;
+    margin: 0 !important;
+ }
+
+.beneficial-card .card {
+    margin: 0px;
+    text-align: center;
+    color: white;
+    padding: 5% 5% 5% 5%;
+}
+
+
+
+.event-content .card-group {
+    width: 100% !important;
+}
+
+.beneficial-card {   
+    position: inherit;
+    width: 100%;
+}
+
+.description {
+    margin: 5% 1% 5% 1%;
+}
+
+/* .description-title {
+    margin-top: 5%;
+} */
+
+/* @media screen and (min-width: 900px) {
+    .beneficial-card {
+        position: absolute;
+        top: 100%;
+        z-index: 1;
+        
+    }
+} */
+/* @media screen and (min-width: 200px) {
+    .description {
+        margin: 0 2% 5% 2%;
+    }
+}
+
+@media screen and (min-width: 1000px) and (max-width: 1200px){
+    .description {
+        margin: 30% 2% 5% 2%;
+    }
+}
+@media screen and (min-width: 900px) and (max-width: 1000px){
+    .description {
+        margin: 40% 2% 5% 2%;
+    }
+}
+
+@media screen and (min-width: 1200px){
+    .description {
+        margin: 23% 2% 5% 2% ;
+    }
+} */
+
+.description .card {
+    background: #65266D;
+    font-weight: bold;
+    padding: 5%;
+}
+
+.description .card h5 {
+    color: #5CA4B8;
+}
+
+.description .card p {
+    color: #FFFFFF;
+    font-size: 24px;
+}
+
+.description .card button {
+    margin: 0;
+}
+
+.description-title h1{
+    font-size: 50px;
+    color: black;
+    /* font-weight: bold; */
+}
+
+.event-speakers {
+    padding: 5%;
+    color: white;
+    background: #003845;
+    width: 100%;
+}
+
+.speakers-title {
+    margin-top: 3%;
+    margin-bottom: 5%;
+}
+
+.text-ads {
+    font-size: 40px;
+    padding: 5% 1% 5% 1%;
+    color: white;
+}
+
+.footer {
+   padding: 5% 15% 5% 15%; 
+   background: #0d2240;
+   color: white;
+   width: 100%;
+   max-width: 1080px;
+   bottom: 0;
+   margin: 0 auto;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.footer ul {
+    list-style-type: none;
+    padding-left: 0 !important;
+}
+
+.footer .col-md-4 {
+    padding-bottom: 10px;
+}
+
+.table-responsive tr .badge {
+    font-size: 15px;
+}
+
+.custom-table-responsive {
+    margin-bottom: 0;
+}
+
+/* .footer-section {
+    margin: 0px 10px 0px 10spx;
+    width: 100%;
+} */
+
+.excitement {
+    width: 100%;
+}
+
+.excitement .row {
+    width: 100%;
+}
+
+.excitement .row .img-ads {
+    padding: 0px !important;
+}
+
+.excitement .row  .img-ads img {
+    width: 100%;
+    height: 100%;
+}
+
+.fellowship {
+    background: #005468;
+    padding: 4% 3% 4% 3%;
+    color: white;
+}
+
+.ticket-suggestions {
+    background: #65266D;
+    color: white;
+    margin-top: 2%;
+    padding: 3% 2% 3% 2%;
+}
+.badge-suggestions {
+    background: #005468;
+    color: white;
+    margin-bottom: 2%;
+    padding: 3% 2% 3% 2%;
+}
+
+.ticket-suggestions a {
+    background-color: transparent;
+    border: 2px solid white;
+    color: white;
+    height: 80%;
+    padding: 5% 0 5% 0;
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ticket-suggestions .col-md-2 {
+    text-align: center;
+}
