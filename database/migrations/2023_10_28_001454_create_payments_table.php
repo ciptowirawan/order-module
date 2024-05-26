@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->decimal('amount', $precision = 12, $scale = 2);
-            $table->string('status')->default('unpaid');
-            $table->string('payment_evidence')->nullable();
+            $table->string('status')->default('PENDING');
+            $table->string('payment_account')->nullable();
             $table->datetime('payment_date')->nullable();
             $table->decimal('paid_amount', $precision = 12, $scale = 2)->nullable();
-            $table->foreignId('pendaftaran_id')->references('id')->on('pendaftaran')->onDelete('cascade');
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

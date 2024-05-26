@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5976f64df8e994f76ed78585b18aaaa5",
+    "content-hash": "518a00308b5d4c49c848a2fd77a108e8",
     "packages": [
         {
             "name": "brick/math",
@@ -640,6 +640,336 @@
                 }
             ],
             "time": "2023-10-06T06:47:41+00:00"
+        },
+        {
+            "name": "enqueue/dsn",
+            "version": "0.10.19",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-enqueue/dsn.git",
+                "reference": "f4991fe46dd01477deb566727170341b255e8479"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-enqueue/dsn/zipball/f4991fe46dd01477deb566727170341b255e8479",
+                "reference": "f4991fe46dd01477deb566727170341b255e8479",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.4|^8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.10.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Enqueue\\Dsn\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Parse DSN",
+            "homepage": "https://enqueue.forma-pro.com/",
+            "keywords": [
+                "dsn",
+                "parse"
+            ],
+            "support": {
+                "docs": "https://github.com/php-enqueue/enqueue-dev/blob/master/docs/index.md",
+                "email": "opensource@forma-pro.com",
+                "forum": "https://gitter.im/php-enqueue/Lobby",
+                "issues": "https://github.com/php-enqueue/enqueue-dev/issues",
+                "source": "https://github.com/php-enqueue/enqueue-dev"
+            },
+            "time": "2023-03-23T09:50:55+00:00"
+        },
+        {
+            "name": "enqueue/enqueue",
+            "version": "0.10.20",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-enqueue/enqueue.git",
+                "reference": "4b3c6e98215cbc67c79fe0bfb6af55ccaac0e8fe"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-enqueue/enqueue/zipball/4b3c6e98215cbc67c79fe0bfb6af55ccaac0e8fe",
+                "reference": "4b3c6e98215cbc67c79fe0bfb6af55ccaac0e8fe",
+                "shasum": ""
+            },
+            "require": {
+                "enqueue/dsn": "^0.10",
+                "enqueue/null": "^0.10",
+                "php": "^7.4|^8.0",
+                "psr/container": "^1.1 || ^2.0",
+                "psr/log": "^1.0 || ^2.0 || ^3.0",
+                "queue-interop/amqp-interop": "^0.8.2",
+                "queue-interop/queue-interop": "^0.8",
+                "ramsey/uuid": "^3.5|^4"
+            },
+            "require-dev": {
+                "empi89/php-amqp-stubs": "*@dev",
+                "enqueue/amqp-bunny": "0.10.x-dev",
+                "enqueue/amqp-ext": "0.10.x-dev",
+                "enqueue/amqp-lib": "0.10.x-dev",
+                "enqueue/dbal": "0.10.x-dev",
+                "enqueue/dsn": "0.10.x-dev",
+                "enqueue/fs": "0.10.x-dev",
+                "enqueue/gearman": "0.10.x-dev",
+                "enqueue/gps": "0.10.x-dev",
+                "enqueue/mongodb": "0.10.x-dev",
+                "enqueue/pheanstalk": "0.10.x-dev",
+                "enqueue/rdkafka": "0.10.x-dev",
+                "enqueue/redis": "0.10.x-dev",
+                "enqueue/simple-client": "0.10.x-dev",
+                "enqueue/sqs": "0.10.x-dev",
+                "enqueue/stomp": "0.10.x-dev",
+                "enqueue/test": "0.10.x-dev",
+                "phpunit/phpunit": "^9.5",
+                "symfony/config": "^5.4|^6.0",
+                "symfony/console": "^5.41|^6.0",
+                "symfony/dependency-injection": "^5.4|^6.0",
+                "symfony/event-dispatcher": "^5.4|^6.0",
+                "symfony/http-kernel": "^5.4|^6.0",
+                "symfony/yaml": "^5.4|^6.0"
+            },
+            "suggest": {
+                "enqueue/amqp-ext": "AMQP transport (based on php extension)",
+                "enqueue/dbal": "Doctrine DBAL transport",
+                "enqueue/fs": "Filesystem transport",
+                "enqueue/redis": "Redis transport",
+                "enqueue/sqs": "Amazon AWS SQS transport",
+                "enqueue/stomp": "STOMP transport",
+                "symfony/config": "^5.4|^6.0",
+                "symfony/console": "^5.4|^6.0 If you want to use cli commands",
+                "symfony/dependency-injection": "^5.4|^6.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.10.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Enqueue\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Message Queue Library",
+            "homepage": "https://enqueue.forma-pro.com/",
+            "keywords": [
+                "AMQP",
+                "messaging",
+                "queue",
+                "rabbitmq"
+            ],
+            "support": {
+                "docs": "https://github.com/php-enqueue/enqueue-dev/blob/master/docs/index.md",
+                "email": "opensource@forma-pro.com",
+                "forum": "https://gitter.im/php-enqueue/Lobby",
+                "issues": "https://github.com/php-enqueue/enqueue-dev/issues",
+                "source": "https://github.com/php-enqueue/enqueue-dev"
+            },
+            "time": "2023-10-15T09:28:46+00:00"
+        },
+        {
+            "name": "enqueue/null",
+            "version": "0.10.19",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-enqueue/null.git",
+                "reference": "c7174da80c59b04391c5194cebe46b6f85d79fb4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-enqueue/null/zipball/c7174da80c59b04391c5194cebe46b6f85d79fb4",
+                "reference": "c7174da80c59b04391c5194cebe46b6f85d79fb4",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.4|^8.0",
+                "queue-interop/queue-interop": "^0.8"
+            },
+            "require-dev": {
+                "enqueue/test": "0.10.x-dev",
+                "phpunit/phpunit": "^9.5",
+                "queue-interop/queue-spec": "^0.6.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.10.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Enqueue\\Null\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Enqueue Null transport",
+            "homepage": "https://enqueue.forma-pro.com/",
+            "keywords": [
+                "messaging",
+                "queue",
+                "testing"
+            ],
+            "support": {
+                "docs": "https://github.com/php-enqueue/enqueue-dev/blob/master/docs/index.md",
+                "email": "opensource@forma-pro.com",
+                "forum": "https://gitter.im/php-enqueue/Lobby",
+                "issues": "https://github.com/php-enqueue/enqueue-dev/issues",
+                "source": "https://github.com/php-enqueue/enqueue-dev"
+            },
+            "time": "2023-03-23T09:50:55+00:00"
+        },
+        {
+            "name": "enqueue/rdkafka",
+            "version": "0.10.20",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-enqueue/rdkafka.git",
+                "reference": "d1dfe0422a15f25ef4dfda5eff5cf29633079949"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-enqueue/rdkafka/zipball/d1dfe0422a15f25ef4dfda5eff5cf29633079949",
+                "reference": "d1dfe0422a15f25ef4dfda5eff5cf29633079949",
+                "shasum": ""
+            },
+            "require": {
+                "ext-rdkafka": "^4.0|^5.0|^6.0",
+                "php": "^7.4|^8.0",
+                "queue-interop/queue-interop": "^0.8.1"
+            },
+            "require-dev": {
+                "enqueue/null": "0.10.x-dev",
+                "enqueue/test": "0.10.x-dev",
+                "kwn/php-rdkafka-stubs": "^2.0.3",
+                "phpunit/phpunit": "^9.5",
+                "queue-interop/queue-spec": "^0.6.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.10.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Enqueue\\RdKafka\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Message Queue Kafka Transport",
+            "homepage": "https://enqueue.forma-pro.com/",
+            "keywords": [
+                "kafka",
+                "messaging",
+                "queue"
+            ],
+            "support": {
+                "docs": "https://github.com/php-enqueue/enqueue-dev/blob/master/docs/index.md",
+                "email": "opensource@forma-pro.com",
+                "forum": "https://gitter.im/php-enqueue/Lobby",
+                "issues": "https://github.com/php-enqueue/enqueue-dev/issues",
+                "source": "https://github.com/php-enqueue/enqueue-dev"
+            },
+            "time": "2023-08-08T20:59:25+00:00"
+        },
+        {
+            "name": "enqueue/simple-client",
+            "version": "0.10.19",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-enqueue/simple-client.git",
+                "reference": "f8a5e00d1648559748bfa79485168c10acb075be"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-enqueue/simple-client/zipball/f8a5e00d1648559748bfa79485168c10acb075be",
+                "reference": "f8a5e00d1648559748bfa79485168c10acb075be",
+                "shasum": ""
+            },
+            "require": {
+                "enqueue/enqueue": "^0.10",
+                "php": "^7.4|^8.0",
+                "queue-interop/amqp-interop": "^0.8.2",
+                "queue-interop/queue-interop": "^0.8",
+                "symfony/config": "^5.4|^6.0"
+            },
+            "require-dev": {
+                "enqueue/amqp-ext": "0.10.x-dev",
+                "enqueue/fs": "0.10.x-dev",
+                "enqueue/null": "0.10.x-dev",
+                "enqueue/test": "0.10.x-dev",
+                "phpunit/phpunit": "^9.5",
+                "symfony/yaml": "^5.4|^6.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.10.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Enqueue\\SimpleClient\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Message Queue Simple Client",
+            "homepage": "https://enqueue.forma-pro.com/",
+            "keywords": [
+                "AMQP",
+                "messaging",
+                "queue",
+                "rabbitmq"
+            ],
+            "support": {
+                "docs": "https://github.com/php-enqueue/enqueue-dev/blob/master/docs/index.md",
+                "email": "opensource@forma-pro.com",
+                "forum": "https://gitter.im/php-enqueue/Lobby",
+                "issues": "https://github.com/php-enqueue/enqueue-dev/issues",
+                "source": "https://github.com/php-enqueue/enqueue-dev"
+            },
+            "time": "2023-03-23T09:50:55+00:00"
         },
         {
             "name": "fruitcake/php-cors",
@@ -3833,6 +4163,100 @@
             "time": "2023-12-20T15:28:09+00:00"
         },
         {
+            "name": "queue-interop/amqp-interop",
+            "version": "0.8.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/queue-interop/amqp-interop.git",
+                "reference": "a893c72832784ca846fcc1bd86274a6a449a1ab7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/queue-interop/amqp-interop/zipball/a893c72832784ca846fcc1bd86274a6a449a1ab7",
+                "reference": "a893c72832784ca846fcc1bd86274a6a449a1ab7",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.3 | ^8.0",
+                "queue-interop/queue-interop": "^0.7|^0.8|^0.9"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~9.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.8.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Interop\\Amqp\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "AMQP interop",
+            "support": {
+                "issues": "https://github.com/queue-interop/amqp-interop/issues",
+                "source": "https://github.com/queue-interop/amqp-interop/tree/0.8.2"
+            },
+            "time": "2021-01-21T11:33:30+00:00"
+        },
+        {
+            "name": "queue-interop/queue-interop",
+            "version": "0.8.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/queue-interop/queue-interop.git",
+                "reference": "117043fd38490f8b5516622cd4b697b33a89ce2b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/queue-interop/queue-interop/zipball/117043fd38490f8b5516622cd4b697b33a89ce2b",
+                "reference": "117043fd38490f8b5516622cd4b697b33a89ce2b",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1.3 || ^8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5.5 || ^6.0 || ^7.0 || ^8.0 || ^9.0",
+                "queue-interop/queue-spec": "^0.6@dev"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.7-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Interop\\Queue\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Promoting the interoperability of MQs objects. Based on Java JMS",
+            "homepage": "https://github.com/queue-interop/queue-interop",
+            "keywords": [
+                "MQ",
+                "jms",
+                "message queue",
+                "messaging",
+                "queue"
+            ],
+            "support": {
+                "issues": "https://github.com/queue-interop/queue-interop/issues",
+                "source": "https://github.com/queue-interop/queue-interop/tree/0.8.1"
+            },
+            "time": "2020-12-21T13:14:51+00:00"
+        },
+        {
             "name": "ralouphie/getallheaders",
             "version": "3.0.3",
             "source": {
@@ -4138,6 +4562,81 @@
                 }
             ],
             "time": "2023-12-24T06:58:02+00:00"
+        },
+        {
+            "name": "symfony/config",
+            "version": "v6.4.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/config.git",
+                "reference": "51da0e4494d81bd7b5b5bd80319c55d8e0d7f4ff"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/config/zipball/51da0e4494d81bd7b5b5bd80319c55d8e0d7f4ff",
+                "reference": "51da0e4494d81bd7b5b5bd80319c55d8e0d7f4ff",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1",
+                "symfony/deprecation-contracts": "^2.5|^3",
+                "symfony/filesystem": "^5.4|^6.0|^7.0",
+                "symfony/polyfill-ctype": "~1.8"
+            },
+            "conflict": {
+                "symfony/finder": "<5.4",
+                "symfony/service-contracts": "<2.5"
+            },
+            "require-dev": {
+                "symfony/event-dispatcher": "^5.4|^6.0|^7.0",
+                "symfony/finder": "^5.4|^6.0|^7.0",
+                "symfony/messenger": "^5.4|^6.0|^7.0",
+                "symfony/service-contracts": "^2.5|^3",
+                "symfony/yaml": "^5.4|^6.0|^7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Config\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Helps you find, load, combine, autofill and validate configuration values of any kind",
+            "homepage": "https://symfony.com",
+            "support": {
+                "source": "https://github.com/symfony/config/tree/v6.4.7"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2024-04-18T09:22:46+00:00"
         },
         {
             "name": "symfony/console",
@@ -4595,6 +5094,70 @@
                 }
             ],
             "time": "2023-05-23T14:45:45+00:00"
+        },
+        {
+            "name": "symfony/filesystem",
+            "version": "v6.4.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/filesystem.git",
+                "reference": "78dde75f8f6dbbca4ec436a4b0087f7af02076d4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/filesystem/zipball/78dde75f8f6dbbca4ec436a4b0087f7af02076d4",
+                "reference": "78dde75f8f6dbbca4ec436a4b0087f7af02076d4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1",
+                "symfony/polyfill-ctype": "~1.8",
+                "symfony/polyfill-mbstring": "~1.8",
+                "symfony/process": "^5.4|^6.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Filesystem\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Provides basic utilities for the filesystem",
+            "homepage": "https://symfony.com",
+            "support": {
+                "source": "https://github.com/symfony/filesystem/tree/v6.4.7"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2024-04-18T09:22:46+00:00"
         },
         {
             "name": "symfony/finder",
@@ -9107,5 +9670,5 @@
         "php": "^8.1"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.6.0"
 }
