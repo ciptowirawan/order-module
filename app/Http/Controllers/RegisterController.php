@@ -52,42 +52,42 @@ class RegisterController extends Controller
 
         $validatedData = $validator->validated();
 
-        // $reguser = User::create([
-        //     'name' => strtoupper($request->full_name),
-        //     'email' =>  $request->email,
-        //     'password' => Hash::make($request->password),
-        //     'registration_type' => $request->registration_type,
-        //     'full_name' => strtoupper($request->full_name),
-        //     'title' => $request->title,
-        //     'address_1' => strtoupper($request->address_1),
-        //     'address_2' => $request->address_2,
-        //     'country' => $request->country,
-        //     'city' => strtoupper($request->city),
-        //     'province' => strtoupper($request->province),
-        //     'zip' => $request->zip,
-        //     'phone_number' => $request->phone_number,
-        //     'alternate_phone_number' => $request->alternate_phone_number,
-        //     'club_number' => $request->club_number,
-        //     'club_name' => strtoupper($request->club_name),
-        //     'email' =>  $request->email,
-        //     // 'nomor_hp' => '+62'. $request->nomor_hp,
-        //     'emergency_contact' => strtoupper($request->emergency_contact),
-        //     'emergency_phone_number' => $request->emergency_phone_number,
-        //     'district' => $request->district,
-        // ]);
+        $reguser = User::create([
+            'name' => strtoupper($request->full_name),
+            'email' =>  $request->email,
+            'password' => Hash::make($request->password),
+            'registration_type' => $request->registration_type,
+            'full_name' => strtoupper($request->full_name),
+            'title' => $request->title,
+            'address_1' => strtoupper($request->address_1),
+            'address_2' => $request->address_2,
+            'country' => $request->country,
+            'city' => strtoupper($request->city),
+            'province' => strtoupper($request->province),
+            'zip' => $request->zip,
+            'phone_number' => $request->phone_number,
+            'alternate_phone_number' => $request->alternate_phone_number,
+            'club_number' => $request->club_number,
+            'club_name' => strtoupper($request->club_name),
+            'email' =>  $request->email,
+            // 'nomor_hp' => '+62'. $request->nomor_hp,
+            'emergency_contact' => strtoupper($request->emergency_contact),
+            'emergency_phone_number' => $request->emergency_phone_number,
+            'district' => $request->district,
+        ]);
 
-        // $reguserData = $reguser->toArray();
-        // $reguserData['amount'] = $tarif;
-        // $reguserData['account'] = $validatedData['account'];
+        $reguserData = $reguser->toArray();
+        $reguserData['amount'] = $tarif;
+        $reguserData['account'] = $validatedData['account'];
 
-        $fck = [
-            'data' => 'test'
-        ];
+        // $fck = [
+        //     'data' => 'test'
+        // ];
 
         $message = new Message(
             topicName: 'registrant-created',
             headers: ['Content-Type' => 'application/json'],
-            body: $fck,
+            body: $reguserData,
             key: 'registrant-created'  
         );
     

@@ -15,16 +15,21 @@ class SyncPaymentData implements ShouldQueue
      */
     public function handle(PaymentDataReceived $event): void
     {
-        // Extract the movie data from the event
-        $data = json_decode($event->data);
+        try {
+           // Extract the movie data from the event
+            $data = json_decode($event->data);
 
-        $user = User::where('id', $data->user_id)
-        ->update([
-            'status' => $data->status
-        ]);
+            $user = User::where('id', $data->user_id)
+            ->update([
+                'status' => $data->status
+            ]);
 
-        echo "Updated User: ", print_r($user, true);
+            echo "Updated User: ", print_r($user, true);
 
-        Log::info('User data synchronized: ' . $data->user_id);
+            Log::info('User data synchronized: ' . $data->user_id);
+        } catch (\Exception $e) {
+            // Log the error message
+            Log::error('Error in handle method: ' . $e->getMessage());
+        }
     }
 }
