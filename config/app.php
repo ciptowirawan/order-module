@@ -163,7 +163,7 @@ return [
          * Package Service Providers...
          */
         Spatie\Permission\PermissionServiceProvider::class,
-        Enqueue\LaravelQueue\EnqueueServiceProvider::class,
+        // Enqueue\LaravelQueue\EnqueueServiceProvider::class,
 
         /*
          * Application Service Providers...

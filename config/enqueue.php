@@ -1,12 +1,10 @@
 <?php
-
-
 return [
     'default' => [
         'transport' => [
             'dsn' => 'rdkafka://localhost:9092',
             'global' => [
-                'group.id' => 'default',
+                'group.id' => 'payment-service', // Adjust group.id per module
                 'metadata.broker.list' => 'localhost:9092',
             ],
             'topic' => [
@@ -15,7 +13,7 @@ return [
         ],
         'client' => [
             'prefix' => 'enqueue',
-            'app_name' => 'app',
+            'app_name' => 'payment-service',
             'router_topic' => 'default',
             'router_queue' => 'default',
         ],
@@ -25,7 +23,7 @@ return [
         ],
         'consumption' => [
             'receive_timeout' => 10000,
-            'redelivered_delay_time' => 0,
         ],
     ],
 ];
+

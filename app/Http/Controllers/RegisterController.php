@@ -6,6 +6,8 @@ use Validator;
 use App\Models\User;
 use App\Models\Payment;
 use Illuminate\Http\Request;
+use Junges\Kafka\Facades\Kafka;
+use Junges\Kafka\Message\Message;
 use App\Http\Resources\PostResource;
 use Illuminate\Support\Facades\Hash;
 use Enqueue\SimpleClient\SimpleClient;
@@ -40,6 +42,7 @@ class RegisterController extends Controller
             'emergency_contact' => ['required', 'string', 'max:255'],
             'emergency_phone_number' => ['required', 'digits_between:9,15'],
             'district' => ['required'],
+            'account' => ['required'],
             'password' => ['required', 'confirmed'],
         ]);
 
@@ -47,32 +50,55 @@ class RegisterController extends Controller
             return response()->json($validator->errors(), 422);
         }
 
-        $reguser = User::create([
-            'name' => strtoupper($request->full_name),
-            'email' =>  $request->email,
-            'password' => Hash::make($request->password),
-            'registration_type' => $request->registration_type,
-            'full_name' => strtoupper($request->full_name),
-            'title' => $request->title,
-            'address_1' => strtoupper($request->address_1),
-            'address_2' => $request->address_2,
-            'country' => $request->country,
-            'city' => strtoupper($request->city),
-            'province' => strtoupper($request->province),
-            'zip' => $request->zip,
-            'phone_number' => $request->phone_number,
-            'alternate_phone_number' => $request->alternate_phone_number,
-            'club_number' => $request->club_number,
-            'club_name' => strtoupper($request->club_name),
-            'email' =>  $request->email,
-            // 'nomor_hp' => '+62'. $request->nomor_hp,
-            'emergency_contact' => strtoupper($request->emergency_contact),
-            'emergency_phone_number' => $request->emergency_phone_number,
-            'district' => $request->district,
-        ]);
+        $validatedData = $validator->validated();
 
-        $producer = $this->client->getProducer();
-        $producer->sendEvent('order-created', json_encode($user));
+        // $reguser = User::create([
+        //     'name' => strtoupper($request->full_name),
+        //     'email' =>  $request->email,
+        //     'password' => Hash::make($request->password),
+        //     'registration_type' => $request->registration_type,
+        //     'full_name' => strtoupper($request->full_name),
+        //     'title' => $request->title,
+        //     'address_1' => strtoupper($request->address_1),
+        //     'address_2' => $request->address_2,
+        //     'country' => $request->country,
+        //     'city' => strtoupper($request->city),
+        //     'province' => strtoupper($request->province),
+        //     'zip' => $request->zip,
+        //     'phone_number' => $request->phone_number,
+        //     'alternate_phone_number' => $request->alternate_phone_number,
+        //     'club_number' => $request->club_number,
+        //     'club_name' => strtoupper($request->club_name),
+        //     'email' =>  $request->email,
+        //     // 'nomor_hp' => '+62'. $request->nomor_hp,
+        //     'emergency_contact' => strtoupper($request->emergency_contact),
+        //     'emergency_phone_number' => $request->emergency_phone_number,
+        //     'district' => $request->district,
+        // ]);
+
+        // $reguserData = $reguser->toArray();
+        // $reguserData['amount'] = $tarif;
+        // $reguserData['account'] = $validatedData['account'];
+
+        $fck = [
+            'data' => 'test'
+        ];
+
+        $message = new Message(
+            topicName: 'registrant-created',
+            headers: ['Content-Type' => 'application/json'],
+            body: $fck,
+            key: 'registrant-created'  
+        );
+    
+        try {
+            $producer = Kafka::publishOn('registrant-created', '192.168.99.100:29092')->withMessage($message);
+
+            $producer->send();
+        } catch (Exception $e) {
+            dd('Caught exception: ',  $e->getMessage(), "\n");
+        }
+        
 
         return response()->json(['message' => 'User registered successfully']);
     }
