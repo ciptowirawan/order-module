@@ -5,6 +5,8 @@ namespace App\Providers;
 use Illuminate\Auth\Events\Login;
 use App\Listeners\SyncPaymentData;
 use App\Events\PaymentDataReceived;
+use App\Listeners\SyncPaymentMember;
+use App\Events\PaymentMemberReceived;
 use App\Listeners\LogSuccessfulLogin;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
@@ -27,6 +29,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         PaymentDataReceived::class => [
             SyncPaymentData::class,
+        ],
+        PaymentMemberReceived::class => [
+            SyncPaymentMember::class,
         ],
     ];
 

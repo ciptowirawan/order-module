@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\Order;
 use App\Models\Pendaftaran;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class DashboardController extends Controller
 {
@@ -62,19 +64,21 @@ class DashboardController extends Controller
             return View('dashboard.index-admin', compact('totalRegistrants', 'totalPaidRegistrants', 'totalUnpaidRegistrants', 'totalNotIdentifiedRegistrants', 'registrationsByMonth', 'CC_percent', 'DG_percent', 'PCC_percent', 'PDG_percent', 'RC_percent', 'ZC_percent', 'CP_percent', 'CS_percent', 'Unknown_percent', 'Lion_percent', 'Leo_percent', 'Adult_percent'));
         } else {
 
-            $pendaftaran = Pendaftaran::where('user_id',auth()->user()->id)->with('payment')->first();
+            $member = User::where('id',auth()->user()->id)->first();
+
+            $amount = Order::where('user_id', auth()->user()->id)->where('status', 'PENDING')->value('amount');
     
-            $historicalData = json_decode($pendaftaran->historical_data, true);
+            // $historicalData = json_decode($pendaftaran->historical_data, true);
 
-            $history = 0;
+            // $history = 0;
             
-            if ($historicalData !== null) {
-                foreach ($historicalData as $index => $subArray) {
-                    $history = count($subArray);
-                } 
-            }
+            // if ($historicalData !== null) {
+            //     foreach ($historicalData as $index => $subArray) {
+            //         $history = count($subArray);
+            //     } 
+            // }
 
-            return View('dashboard.index', compact('pendaftaran', 'history'));
+            return View('dashboard.index-group', compact('member', 'amount'));
         //     $pendaftar = Pendaftaran::where('user_id',auth()->user()->id)->with('payment')->first();
         //     if ($pendaftar->payment->status == 'unpaid') {
         //         return View('dashboard.payment', compact('pendaftar'));

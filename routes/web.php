@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\Dashboard\AdminController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -23,7 +24,7 @@ use App\Http\Controllers\Dashboard\ParticipantController;
 */
 
 Route::get('/', function () {
-    return view('register.form');
+    return view('welcome');
 });
 
 // Route::get('/register/information/ticketed-events', function () {
@@ -48,12 +49,12 @@ Route::get('/', function () {
 //     Route::get('/login-summary', [ReportController::class, 'index_login'])->middleware('auth', 'is_admin');
 // });
 
-// Route::prefix('/register')->group(function() {
-//     Route::get('/', [RegisterController::class, 'index']);
-//     Route::get('/information', [RegisterController::class, 'index_info']);
-//     Route::get('/create ', [RegisterController::class, 'form']);
-//     Route::post('/store ', [RegisterController::class, 'store']);
-// });
+Route::prefix('/register')->group(function() {
+    Route::get('/', [RegistrationController::class, 'index']);
+    Route::get('/information', [RegistrationController::class, 'index_info']);
+    Route::get('/create ', [RegistrationController::class, 'form']);
+    Route::post('/store ', [RegistrationController::class, 'store_member']);
+});
 
 // Route::prefix('/manage')->group(function() {
 //     Route::get('/unpaid', [ParticipantController::class, 'index_unpaid'])->middleware('auth', 'verified', 'is_admin');
@@ -66,9 +67,9 @@ Route::get('/', function () {
 //     Route::delete('/admin/destroy/{id}', [AdminController::class, 'destroy'])->middleware('auth', 'verified', 'is_admin');
 // });
 
-// Route::prefix('/dashboard')->group(function() {
-//     Route::get('/', [DashboardController::class, 'index'])->middleware('auth', 'verified');     
-// });
+Route::prefix('/dashboard')->group(function() {
+    Route::get('/', [DashboardController::class, 'index'])->middleware('auth');     
+});
 
 
 // // email verification Route Handler
@@ -91,8 +92,8 @@ Route::get('/', function () {
 
 
 
-// Auth::routes([
-//     'register' => false,
-// ]);
+Auth::routes([
+    'register' => false,
+]);
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -39,10 +39,6 @@ class PermissionSeeder extends Seeder
         $role_admin->givePermissionTo('add');
         $role_admin->givePermissionTo('delete');
 
-        $role_inactive = Role::create(['name' => 'inactive']);
-        $role_inactive->givePermissionTo('browse');
-        $role_inactive->givePermissionTo('read');
-
         // Assign user to role
         $admin = User::where(['id' => 1])->first();
         // $user = User::where(['id' => 2])->first();

@@ -4,18 +4,17 @@ namespace App\Listeners;
 
 use Carbon\Carbon;
 use App\Models\User;
-use App\Models\Order;
-use App\Events\PaymentDataReceived;
 use Illuminate\Support\Facades\Log;
+use App\Events\PaymentMemberReceived;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class SyncPaymentData implements ShouldQueue
+class SyncPaymentMember implements ShouldQueue
 {
     /**
      * Handle the event.
      */
-    public function handle(PaymentDataReceived $event): void
+    public function handle(PaymentMemberReceived $event): void
     {
         try {
            // Extract the movie data from the event
@@ -26,12 +25,7 @@ class SyncPaymentData implements ShouldQueue
                 'member_activate_in' => Carbon::now(),
                 'member_over_in' => Carbon::now()->addYear(),
                 'status' => $data->status,
-                'registrant_tag' => "MEMBER"
-            ]);
-
-            $order = Order::where('user_id', $data->user_id)
-            ->update([
-                'status' => $data->status
+                'registrant-tag' => "MEMBER"
             ]);
 
             echo "Updated User: ", print_r($user, true);

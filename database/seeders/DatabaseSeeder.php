@@ -3,12 +3,13 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
 use App\Models\User;
+use App\Models\Event;
+use App\Models\Payment;
 use App\Models\Category;
 use App\Models\Pendaftaran;
+use Illuminate\Database\Seeder;
 use App\Models\OpenRegistration;
-use App\Models\Payment;
 use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
@@ -31,10 +32,15 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('progress#2023')
         ]);
 
-        OpenRegistration::create([
-            'kode_status' => 'open-registration',
-            'value' => 'early'
+        Event::create([
+            'event_name' => "membership",
+            'amount' => 1680000
         ]);
+
+        // OpenRegistration::create([
+        //     'kode_status' => 'open-registration',
+        //     'value' => 'early'
+        // ]);
 
         $this->call([
             PermissionSeeder::class,

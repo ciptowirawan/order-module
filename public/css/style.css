@@ -6,7 +6,6 @@
 
 .event-content {
     width: 100%;
-    max-width: 1080px;
     margin: 0 auto;
 }
 
@@ -14,7 +13,6 @@
 .mobile-navigation {
     display: none;
     width: 100%;
-    max-width: 1080px;
     margin: 0 auto;
 }
 
@@ -40,7 +38,6 @@
     font-weight: bold;
     font-size: 20px;    
     width: 100%;
-    max-width: 1080px;
     margin: 0 auto;
 }
 
@@ -61,7 +58,6 @@
 
 .top-header {
     width: 100%;
-    max-width: 1080px;
     margin: 0 auto;
 }
 
@@ -300,7 +296,6 @@ form[method=post] input[type=text] {
    background: #0d2240;
    color: white;
    width: 100%;
-   max-width: 1080px;
    bottom: 0;
    margin: 0 auto;
 }
