@@ -44,6 +44,7 @@
             </div>
         </div>
     </button> --}}
+    @if ($amount)
     <div class="card shadow mb-2 col-md-12 col-xs-12" align="center">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Membership Payment Details</h6>
@@ -53,6 +54,7 @@
             <h5 class="mb-4 text-dark">Biaya Pendaftaran: <b>IDR {{ number_format($amount,0) }}</b></h5>
         </div>
     </div>    
+    @endif
 
     <p class="my-4 text-gray" style="font-weight: 600;">Terima kasih telah melakukan registrasi pada Konvensi Lions MD 307 Ke - 49. Berikut adalah rincian pendaftaran anda:</p>
 

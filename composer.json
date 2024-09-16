@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
+        "barryvdh/laravel-dompdf": "^3.0",
         "cron/cron": "^1.9",
         "enqueue/rdkafka": "^0.10.20",
         "enqueue/simple-client": "^0.10.19",
@@ -19,6 +20,8 @@
         "mateusjunges/laravel-kafka": "^1.13",
         "pragmarx/countries": "^0.8.2",
         "psr/simple-cache": "1.0.1",
+        "realrashid/sweet-alert": "^7.2",
+        "simplesoftwareio/simple-qrcode": "^4.2",
         "spatie/laravel-permission": "^6.0"
     },
     "require-dev": {

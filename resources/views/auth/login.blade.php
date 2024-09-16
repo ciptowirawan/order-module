@@ -39,7 +39,7 @@
                             </div>
                         </div>
 
-                        <div class="row mb-3">
+                        {{-- <div class="row mb-3">
                             <div class="col-md-6 offset-md-4">
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
@@ -49,7 +49,7 @@
                                     </label>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
 
                         <div class="row mb-0">
                             <div class="col-md-8 offset-md-4">
@@ -65,6 +65,17 @@
                             </div>
                         </div>
                     </form>
+                </div>
+            </div>
+            <div class="mt-3 text-primary bold d-flex justify-content-end px-3">
+                <div class="row justify-content-around">
+                    <div class="col-sm-6 col-md-6 col-lg-8 d-flex flex-column justify-content-center text-end mb-2">
+                        Belum Memiliki Akun?
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-4 text-end">
+                        <a href="/register/create" class="btn text-light bold" style="background: #5CA4B8;">Join Membership</a>
+                    </div>
+                    </div>
                 </div>
             </div>
         </div>

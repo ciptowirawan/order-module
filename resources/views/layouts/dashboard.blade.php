@@ -417,6 +417,8 @@
 
     </script>
 
+@include('sweetalert::alert')
+
 @stack('body-scripts')
 
     <!-- Bootstrap core JavaScript-->

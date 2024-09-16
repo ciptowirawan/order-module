@@ -26,8 +26,8 @@
             <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp" alt="avatar"
                 class="rounded-circle img-fluid" style="width: 150px;">
             <h5 class="my-3 bold" style="color: dimgray">{{ $member->full_name }}</h5>     
-            <p class="text-muted mb-1"><b>{{ $member->title ? $member->title . ' - '. $member->registration_type : $member->registration_type }}</b></p>        
-            <p class="badge badge-{{$member->status == 'SUCCESS' ? 'success' : 'danger'}} fs-6">{{ $member->status == 'SUCCESS' ? 'Active' : "Inactive" }}
+            <p class="text-muted mb-1"><b>{{ $member->title ?? "-" }}</b></p>        
+            <p class="badge bg-{{$member->status == 'SUCCESS' ? 'success' : 'danger'}} fs-6">{{ $member->status == 'SUCCESS' ? 'Active' : "Inactive" }}
             </div>
         </div>
         </div>

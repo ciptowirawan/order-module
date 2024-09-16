@@ -19,7 +19,7 @@
         <h1>Lions MD307 <br> Convention 2024 Indonesia</h1>
         <p>The Lions International Convention is happening June 00-00, 2024. Celebrate service with your fellow <br> Lions and Leos in one of the most unique and exciting travel destinations in the world — beautiful Indonesia!</p>
     </div>
-        <a href="/register/create"><button class="btn register-button">Register Now</button></a>
+        <a href="/register/event"><button class="btn register-button">Register Now</button></a>
 </div>
 
 <div class="card-group mt-2">
@@ -64,9 +64,9 @@
         <hr class="small-hr mt-4 mb-5">
     </div>
     <div class="row">
-        <div class="col-md-8">
-            <p>Adventure awaits you in Melbourne as the city hosts thousands of Lions and Leos from all over the globe who come together at the premier event of the year. At our Lions International Convention, you’ll celebrate our commitment to serving our world with your fellow Lions and Leos, friends and make new ones.</p>
-            <p>Known as the cultural capital of Australia, Melbourne offers world-class restaurants and bars, exciting nightlife, eclectic festivals, legendary street art, unique shopping boutiques, incredible beaches and dazzling views, as well as some of the friendliest people you’ll ever meet.</p>
+        <div class="col-md-8" style="line-height: 2;">
+            <p>Adventure awaits you in Indonesia as the city hosts thousands of Lions and Leos from all over the globe who come together at the premier event of the year. At our Lions International Convention, you’ll celebrate our commitment to serving our world with your fellow Lions and Leos, friends and make new ones.</p>
+            <p>Known as the cultural capital of Pontianak, Indonesia offers world-class restaurants and bars, exciting nightlife, eclectic festivals, legendary street art, unique shopping boutiques, incredible beaches and dazzling views, as well as some of the friendliest people you’ll ever meet.</p>
         </div>
         <div class="col-md-4">
             <div class="img-fluid card">
@@ -75,15 +75,15 @@
                   <p class="card-text">June 21-25, 2024</p>
                   <h5 class="card-title">Where</h5>
                   <p class="card-text">Pontianak, Indonesia</p>
-                  <a href="/register/create"><button class="btn register-button">Register Now</button></a> 
+                  <a href="/register/event"><button class="btn register-button">Register Now</button></a> 
                 </div>
               </div>
         </div>
     </div>
 </div>
-<div class="img-fluid d-flex justify-content-center">
+{{-- <div class="img-fluid d-flex justify-content-center">
     <img src="{{ asset('/storage/content-images/city.webp') }}"  width="90%"/>
-</div>
+</div> --}}
 
 <div class="event-speakers">
     <div class="speakers-title" align="center">

@@ -22,11 +22,11 @@
 <body>
     <div class="top-banner">
         <div class="row mt-1 mb-1 pb-2">
-            <div class="col-md-10">
-                <p>Lions MD307 Convention | Indonesia | June 00-00, 2024</p>
+            <div class="col-md-10 d-flex flex-column justify-content-center">
+                <p>Lions MD307 Convention | Indonesia</p>
             </div>
             <div class="col-md-2">
-                <a href="/register/create"><button class="btn register-button">Register</button></a>
+                <a href="/register/create"><button class="btn register-button">Join Membership</button></a>
             </div>
         </div>
     </div>
@@ -311,7 +311,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 
-    
+    @include('sweetalert::alert')
 
     @stack('body-scripts')
 </body>

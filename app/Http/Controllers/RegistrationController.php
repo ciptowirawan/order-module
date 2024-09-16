@@ -66,5 +66,9 @@ class RegistrationController extends RegistrationApiController
         return redirect('/dashboard')->with('success', 'Kami telah mengirimkan tautan verifikasi ke Alamat Email anda. Silahkan cek email anda dan ikuti instruksinya untuk melanjutkan proses verifikasi email.');
     }
 
-
+    public function store_event_participant(Request $request) {
+        $response = $this->store_participant($request)->getData(true);
+    
+        return redirect('/dashboard')->with('success', 'Pendaftaran Kegiatan Berhasil!');
+    }
 }

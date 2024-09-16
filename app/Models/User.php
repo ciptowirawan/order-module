@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Uuid;
 use App\Models\Pendaftaran;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
@@ -54,5 +55,9 @@ class User extends Authenticatable implements MustVerifyEmail
     public function sendEmailVerificationNotification()
     {
         $this->notify(new \App\Notifications\VerifyEmail);
+    }
+
+    public function uuid() {
+        return $this->hasOne(Uuid::class, 'user_id');
     }
 }

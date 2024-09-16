@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\PresenceController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\Dashboard\AdminController;
@@ -54,6 +55,7 @@ Route::prefix('/register')->group(function() {
     Route::get('/information', [RegistrationController::class, 'index_info']);
     Route::get('/create ', [RegistrationController::class, 'form']);
     Route::post('/store ', [RegistrationController::class, 'store_member']);
+    Route::post('/event ', [RegistrationController::class, 'store_event_participant'])->middleware('is_active_member');
 });
 
 // Route::prefix('/manage')->group(function() {
@@ -68,7 +70,8 @@ Route::prefix('/register')->group(function() {
 // });
 
 Route::prefix('/dashboard')->group(function() {
-    Route::get('/', [DashboardController::class, 'index'])->middleware('auth');     
+    Route::get('/', [DashboardController::class, 'index'])->middleware('is_active_member');     
+    Route::get('/presence/update', [PresenceController::class, 'showCheckStatus'])->middleware('auth');
 });
 
 
