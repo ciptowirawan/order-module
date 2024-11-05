@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use libphonenumber\PhoneNumberUtil;
+use RealRashid\SweetAlert\Facades\Alert;
 use PragmaRX\Countries\Package\Countries;
 use App\Http\Controllers\Api\RegistrationApiController;
 
@@ -68,7 +69,13 @@ class RegistrationController extends RegistrationApiController
 
     public function store_event_participant(Request $request) {
         $response = $this->store_participant($request)->getData(true);
-    
-        return redirect('/dashboard')->with('success', 'Pendaftaran Kegiatan Berhasil!');
+
+        if (isset($response['error'])) {
+            Alert::error('Maaf!', $response['error']);
+        } else {
+            Alert::success('Pendaftaran Kegiatan Berhasil!', 'Anda telah berhasil mendaftarkan diri pada kegiatan ini.');
+        }
+
+        return redirect('/');
     }
 }

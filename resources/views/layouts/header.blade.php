@@ -12,6 +12,9 @@
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     @stack('additional-styles')
 
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     {{-- feather icons --}}
     <script src="https://unpkg.com/feather-icons"></script>  
 
@@ -20,61 +23,67 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha512-3P8rXCuGJdNZOnUx/03c1jOTnMn3rP63nBip5gOP2qmUh5YAdVAvFZ1E+QLZZbC1rtMrQb+mah3AfYW11RUrWA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
-    <div class="top-banner">
-        <div class="row mt-1 mb-1 pb-2">
-            <div class="col-md-10 d-flex flex-column justify-content-center">
-                <p>Lions MD307 Convention | Indonesia</p>
+    <div class="top-header-banner pt-0 shadow-sm">
+        <div class="row col-md-12 mb-1">
+            <div class="col-md-5 d-flex flex-column justify-content-center navbar-text text-start">
+                <a href="/" class="text-decoration-none text-dark">Lions MD307 Convention | Indonesia</a>
             </div>
-            <div class="col-md-2">
-                <a href="/register/create"><button class="btn register-button">Join Membership</button></a>
+            @guest
+            <div class="col-md-4 d-flex flex-column justify-content-center text-center">
+                <a href="/register/create"><button class="btn register-button w-100 p-2" style="margin-left: 0 !important">Join Membership</button></a>
+            </div>
+            @endguest
+
+            <div class="col-md-3 d-flex flex-column justify-content-center">
+
+                <ul class="navbar-nav ms-auto" style="list-style-type: none">
+                    @auth
+                        <li class="dropdown dropdown-menu-end">
+                            <a class="btn d-flex justify-content-end" href="/login" id="userDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="d-lg-inline text-dark bold small">{{auth()->user()->full_name}}</span>
+                                &nbsp;
+                                <i class="fa-solid fa-user fa-md d-block" style="color: black"></i>
+                            </a>
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown shadow fade in"
+                                aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="/dashboard">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Profile
+                                </a>
+                                @role('admin')
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Manage Admins
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-user-group fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Manage Participants
+                                </a>
+                                @endrole
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Logout
+                                </a>
+                            </div>
+                        </li>
+                        @endauth
+                        @guest
+                        <li class="nav-item d-flex justify-content-center">
+                            <a href="/login" class="navbar-text btn bold small" style="color: black">Login <i class="fa-solid fa-user fa-md"></i></a>
+                        </li>
+                        @endguest
+                    </ul> 
             </div>
         </div>
     </div>
 
-    <div class="top-header bold">
+    {{-- <div class="top-header bold">
         <div class="header-title">
-            <a href="/" class="text-decoration-none text-dark"><h1>Lions MD307 Convention</h1></a>
-
-            <ul class="mt-2">
-            @auth
-                <li class="dropdown">
-                    <a class="btn" href="/login" id="userDropdown" role="button"
-                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="d-lg-inline text-gray-600 bold small">{{auth()->user()->full_name}}</span>
-                        <i class="fa-solid fa-user fa-md" style="color: #4c076b"></i>
-                    </a>
-                    <!-- Dropdown - User Information -->
-                    <div class="dropdown-menu dropdown shadow fade in"
-                        aria-labelledby="userDropdown">
-                        <a class="dropdown-item" href="/dashboard">
-                            <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                            Profile
-                        </a>
-                        @role('admin')
-                        <a class="dropdown-item" href="#">
-                            <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                            Manage Admins
-                        </a>
-                        <a class="dropdown-item" href="#">
-                            <i class="fas fa-user-group fa-sm fa-fw mr-2 text-gray-400"></i>
-                            Manage Participants
-                        </a>
-                        @endrole
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#logoutModal">
-                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                            Logout
-                        </a>
-                    </div>
-                </li>
-                @endauth
-                @guest
-                <li class="nav-item d-flex justify-content-center">
-                    <a href="/login" class="navbar-text btn bold small" style="color: black">Login <i class="fa-solid fa-user fa-md"></i></a>
-                </li>
-                @endguest
-            </ul> 
-        </div>
+            <a href="/" class="text-decoration-none text-dark d-flex flex-column justify-content-center"><h1>Lions MD307 Convention</h1></a>
+        </div> --}}
 
         <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
@@ -103,7 +112,7 @@
         </div>
     </div>
 
-    <div class="top-navigation">
+    {{-- <div class="top-navigation">
         <div class="topnav" id="myTopnav">
             <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                 <i class="fa fa-bars"></i>
@@ -239,7 +248,7 @@
                 </li>
             </ul>
         </div>
-    </div>
+    </div> --}}
     <div class="event-content">
         @yield('content')
     </div>
@@ -247,8 +256,8 @@
         <h1>MD-307 Convention</h1>
     </div>
     
-    <div class="top-banner">
-        <h3>June 00-00, 2024</h3>
+    <div class="top-banner text-light">
+        <h3>May 8-11, 2025</h3>
     </div>
     
     <div class="footer">

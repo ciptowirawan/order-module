@@ -24,7 +24,7 @@ class AdminController extends Controller
         return view('manage.admin.create');
     }
 
-    public function edit() {
+    public function edit(string $id) {
         $data = User::find($id);
 
         return View('manage.admin.edit', compact('data'));
@@ -32,8 +32,7 @@ class AdminController extends Controller
 
     public function store(Request $request)  {
         $validator = Validator::make($request->all(), [
-            'first_name' => ['required', 'string', 'max:255', 'regex:/^[a-zA-Z\s]*$/'],
-            'last_name' => ['required', 'string', 'max:255', 'regex:/^[a-zA-Z\s]*$/'],
+            'full_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email:dns', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed']
         ]); 
@@ -46,17 +45,15 @@ class AdminController extends Controller
         }
 
         $reguser = User::create([
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
+            'full_name' => $request->full_name,
             'email' =>  $request->email,
             'password' => Hash::make($request->password)
         ]);
+        
         $role = Role::where('name', 'admin')->first();
         $perm = $role->permissions;
         $reguser->syncRoles('admin');
         $reguser->syncPermissions($perm);       
-
-        event(new Registered($reguser));
     
         Auth::login($reguser);
     
@@ -65,17 +62,15 @@ class AdminController extends Controller
 
     public function update(string $id, Request $request) {
         $rules = [
-            'first_name' => ['required', 'string', 'max:255', 'regex:/^[a-zA-Z\s]*$/'],
-            'last_name' => ['required', 'string', 'max:255', 'regex:/^[a-zA-Z\s]*$/'],
-            'email' => ['required', 'string', 'email:dns', 'max:255', 'unique:users']            
+            'full_name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email:dns', 'max:255']            
         ];
 
         $validated = $request->validate($rules);
 
         User::where('id', $id)
             ->update([
-                'nama_depan' => $validated['first_name'],
-                'nama_belakang' => $validated['last_name'],
+                'full_name' => $validated['full_name'],
                 'email' => $validated['email']
             ]);
 

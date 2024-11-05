@@ -13,21 +13,124 @@ class PresenceController extends Controller
     public function index(Request $request) {
         $search = $request->search;
 
-        $pendaftaran = Registration::select(
-            'registrations.*',
-            'payments.amount',
-            'payments.status',
-            'users.email_verified_at',
-        )->leftJoin('users', 'users.id', 'registrations.user_id'
-        )->leftJoin('payments', 'payments.pendaftaran_id', 'pendaftaran.id'        
-        )->where('payments.status', 'paid'
-        )->WhereNull('registrations.status_kehadiran'
+        $pendaftaran = Registration::WhereNull('registrations.status_kehadiran'
         )->Where(function ($query) use ($search) {
             $query->orWhere('registrations.full_name', 'LIKE', '%'.$search.'%'
+            )->orWhere('registrations.title', 'LIKE', '%'.$search.'%'
+            )->orWhere('registrations.club_name', 'LIKE', '%'.$search.'%'
+            )->orWhere('registrations.district', 'LIKE', '%'.$search.'%'
             )->orWhere('registrations.status_kehadiran', 'LIKE', '%'.$search.'%');
         })->paginate(20);
 
         return view('manage.participant.index-presence', compact('pendaftaran'));
+    }
+
+    public function index_participants(Request $request) {
+        $search = $request->search;
+
+        $pendaftaran = Registration::Where(function ($query) use ($search) {
+            $query->orWhere('registrations.full_name', 'LIKE', '%'.$search.'%'
+            )->orWhere('registrations.title', 'LIKE', '%'.$search.'%'
+            )->orWhere('registrations.club_name', 'LIKE', '%'.$search.'%'
+            )->orWhere('registrations.district', 'LIKE', '%'.$search.'%'
+            )->orWhere('registrations.status_kehadiran', 'LIKE', '%'.$search.'%');
+        })->with('user')->paginate(20);
+
+        return view('manage.participant.index-participants', compact('pendaftaran'));
+    }
+
+    public function index_attended(Request $request) {
+        $search = $request->search;
+
+        $pendaftaran = Registration::Where('registrations.status_kehadiran', 'HADIR'
+        )->Where(function ($query) use ($search) {
+            $query->orWhere('registrations.full_name', 'LIKE', '%'.$search.'%'
+            )->orWhere('registrations.title', 'LIKE', '%'.$search.'%'
+            )->orWhere('registrations.club_name', 'LIKE', '%'.$search.'%'
+            )->orWhere('registrations.district', 'LIKE', '%'.$search.'%'
+            )->orWhere('registrations.status_kehadiran', 'LIKE', '%'.$search.'%');
+        })->paginate(20);
+
+        return view('manage.participant.index-attended', compact('pendaftaran'));
+    }
+
+    public function sortAttendedByDistrict(Request $request, string $district) {
+        $search = $request->search;
+
+        $pendaftaran = Registration::Where('registrations.status_kehadiran', 'HADIR'
+        )->Where('district', $district)
+        ->Where(function ($query) use ($search) {
+            $query->orWhere('registrations.full_name', 'LIKE', '%'.$search.'%'
+            )->orWhere('registrations.title', 'LIKE', '%'.$search.'%'
+            )->orWhere('registrations.club_name', 'LIKE', '%'.$search.'%'
+            )->orWhere('registrations.district', 'LIKE', '%'.$search.'%'
+            )->orWhere('registrations.status_kehadiran', 'LIKE', '%'.$search.'%');
+        })->paginate(20);
+
+        return view('manage.participant.index-attended', compact('pendaftaran'));
+    }
+
+    public function sortParticipantsByDistrict(Request $request, string $district) {
+        $search = $request->search;
+
+        $pendaftaran = Registration::Where('district', $district)
+        ->Where(function ($query) use ($search) {
+            $query->orWhere('registrations.full_name', 'LIKE', '%'.$search.'%'
+            )->orWhere('registrations.title', 'LIKE', '%'.$search.'%'
+            )->orWhere('registrations.club_name', 'LIKE', '%'.$search.'%'
+            )->orWhere('registrations.district', 'LIKE', '%'.$search.'%');
+        })->with('user')->paginate(20);
+
+        return view('manage.participant.index-participants', compact('pendaftaran'));
+    }
+
+    public function exportParticipantsByDistrict(string $district) {
+        
+        $participants = Registration::where('district', $district)->get();
+
+        if (!$participants) {
+            abort(404, 'Member not found');
+        }
+
+        $pdf = app('dompdf.wrapper');
+        $pdf->setBasePath(public_path());
+        $pdf->loadView('manage.participant.export-pdf-participants', compact('participants', 'district'));
+
+        return $pdf->download('Event_participants_' .$district. '.pdf');
+    }
+
+    public function exportUnattendedParticipantsByDistrict(string $district) {
+        
+        $participants = Registration::WhereNull('registrations.status_kehadiran'
+        )->where('district', $district)->get();
+
+        if (!$participants) {
+            abort(404, 'Member not found');
+        }
+
+        $unattendedCount = $participants->count();
+
+        $pdf = app('dompdf.wrapper');
+        $pdf->setBasePath(public_path());
+        $pdf->loadView('manage.participant.export-pdf-unattended', compact('participants', 'district', 'unattendedCount'));
+
+        return $pdf->download('Unattended_participants_' .$district. '.pdf');
+    }
+
+    public function exportAttendedParticipantsByDistrict(string $district) {
+        
+        $participants = Registration::Where('registrations.status_kehadiran', 'HADIR'
+        )->where('district', $district)->get();
+
+        if (!$participants) {
+            abort(404, 'Member not found');
+        }
+
+        $pdf = app('dompdf.wrapper');
+        $pdf->setBasePath(public_path());
+        $pdf->loadView('manage.participant.export-pdf-attended', compact('participants', 'district'));
+
+        return $pdf->download('Attended_participants_' .$district. '.pdf');
     }
 
     public function checkPresence(Request $request)

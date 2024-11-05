@@ -1,14 +1,4 @@
 <section style="background-color: #eee;">
-    @if (session()->has('success'))
-    <div class="row alert alert-success ml-0 text-center col-12" role="alert">
-        {{ session('success') }}
-    </div>
-    @endif
-    @if (session()->has('error'))
-        <div class="row alert alert-danger text-center ml-0 col-12" role="alert">
-        {{ session('error') }}
-        </div>
-    @endif
     <div class="container py-5">
     <div class="row">
         <div class="col">
@@ -16,23 +6,32 @@
             <h5 class="bold">Data Diri Peserta</h5>
             </nav>
         </div>
-        </div>
+    </div>
 
     <div class="row">
-        <div class="col-lg-4">
+    <div class="col-lg-4 col-md-4 col-sm-12">
         <div class="card mb-4">
             <div class="card-body text-center">
     
             <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp" alt="avatar"
                 class="rounded-circle img-fluid" style="width: 150px;">
-            <h5 class="my-3 bold" style="color: dimgray">{{ $member->full_name }}</h5>     
-            <p class="text-muted mb-1"><b>{{ $member->title ?? "-" }}</b></p>        
-            <p class="badge bg-{{$member->status == 'SUCCESS' ? 'success' : 'danger'}} fs-6">{{ $member->status == 'SUCCESS' ? 'Active' : "Inactive" }}
+            <h5 class="mt-3 bold" style="color: dimgray">{{ $member->full_name }}</h5>     
+            <p class="text-muted mb-2">{{ $member->title ?? "-" }}</p>        
+            {{-- <p class="badge bg-{{$member->status == 'SUCCESS' ? 'success' : 'danger'}} fs-6">{{ $member->status == 'SUCCESS' ? 'Active' : "Inactive" }}</p> --}}
+            @if ($member->member_over_in)
+            <p class="badge bg-success fs-6 mb-1"><b>Devotional Period: {{ date('Y', strtotime($member->member_activate_in)). " - " . date('Y', strtotime($member->member_over_in))}}</b></p> 
+            @endif
             </div>
         </div>
+        @if ($member->status == 'SUCCESS' && $uuid)
+            <div class="my-4">
+                @include('dashboard.name-tag-pdf')
+            </div>
+        @endif
         </div>
         
-        <div class="col-lg-8">
+        
+        <div class="col-lg-8 col-md-8 col-sm-12">
             <div class="card mb-4">
             <div class="card-body">
                 <div class="row">
@@ -237,7 +236,5 @@
         </div>
     </div>
     </div>
-        
-    <a href="/" class="my-2 btn btn-primary"><span data-feather="corner-down-left"></span> Back to Home Page</a>
     </div>
 </section>

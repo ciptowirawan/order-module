@@ -31,8 +31,8 @@ return new class extends Migration
             $table->string('emergency_contact');
             $table->string('emergency_phone_number');
             $table->string('district');
-            $table->string('terms');
-            $table->string('conditions');
+            $table->string('terms')->nullable();
+            $table->string('conditions')->nullable();
             $table->string('registrant_tag')->nullable();
             $table->integer('group_id')->nullable();
             $table->timestamps();

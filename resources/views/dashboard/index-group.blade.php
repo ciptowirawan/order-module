@@ -45,24 +45,23 @@
         </div>
     </button> --}}
     @if ($amount)
-    <div class="card shadow mb-2 col-md-12 col-xs-12" align="center">
+    <div class="card shadow mb-5 col-md-12 col-xs-12" align="center">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Membership Payment Details</h6>
         </div>
         <div class="card-body py-3">
             <h5 class="mb-2 font-weight-bold text-dark">Lions MD-307 Indonesia</h5>
             <h5 class="mb-4 text-dark">Biaya Pendaftaran: <b>IDR {{ number_format($amount,0) }}</b></h5>
+            <div class="p-3 border" style="width: 300px; background:#c5c7c5ec">
+                <strong id='virtualAccount'>{{$member->virtual_account}}</strong><br>
+                <button onclick='copyVirtualAccount()' class='btn btn-primary mt-2'><b>Copy Virtual Account</b></button>
+            </div>
         </div>
     </div>    
     @endif
 
-    <p class="my-4 text-gray" style="font-weight: 600;">Terima kasih telah melakukan registrasi pada Konvensi Lions MD 307 Ke - 49. Berikut adalah rincian pendaftaran anda:</p>
+    <p class="text-gray" style="font-weight: 600;">Terima kasih telah melakukan registrasi pada Konvensi Lions MD 307 Ke - 49. Berikut adalah rincian pendaftaran anda:</p>
 
-    @error('payment_evidence')
-    <div class="row alert alert-danger col-12 mt-2" role="alert">
-       {{ $message }}
-    </div>
-    @enderror
     @if (session()->has('success'))
     <div class="row alert alert-success col-12 mt-2" role="alert">
         {{ session('success') }}
@@ -279,5 +278,11 @@
     oFReader.onload = function(oFREvent) {
         imgPreview.src = oFREvent.target.result;
     }
+    }
+
+    function copyVirtualAccount() {
+        var virtualAccount = document.getElementById('virtualAccount');
+        navigator.clipboard.writeText(virtualAccount.textContent)
+            .then(() => alert('Virtual Account copied to clipboard!'));
     }
 </script>

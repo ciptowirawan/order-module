@@ -47,14 +47,14 @@
         @foreach ($admins as $admin) 
         <tr align="center">
             <td>{{ $loop->iteration }}</td>
-            <td>{{ $admin->first_name. ' ' .$admin->last_name }}</td>
+            <td>{{ $admin->full_name }}</td>
             <td>{{ $admin->email ?? '-'}}</td>
             <td>{{ $admin->created_at  ?? '-' }}</td>
             <td>{{ $admin->updated_at  ?? '-' }}</td>    
             <td align="center" class="d-block justify-content-center">
                 <div class="d-flex justify-content-left mb-2">
-                    <a href="/manage/admin/edit/{{ $admin->id }}" class="badge bg-warning mx-1"><span data-feather="edit"></span></a>
-                    <button class="badge bg-danger border-0" data-toggle="modal" data-target="#delete{{ $admin->id }}"><span data-feather="x-circle"></span></button>
+                    <a href="/manage/admin/edit/{{ $admin->id }}" class="btn btn-warning mx-1"><b>Edit</b></a>
+                    <button class="btn btn-outline-danger" data-toggle="modal" data-target="#delete{{ $admin->id }}"><b>Delete</b></button>
                 </div>
             </td>
         </tr>
@@ -90,7 +90,7 @@
 
 @else
 
-<p class="text-center my-4 fs-4">Peserta Tidak Ditemukan.</p>    
+<p class="text-center my-4 fs-4">Admin Tidak Ditemukan.</p>    
 @endif
 
 <div class="d-flex justify-content-center" >

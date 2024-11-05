@@ -7,6 +7,8 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Uuid;
 use App\Models\Order;
+use Junges\Kafka\Facades\Kafka;
+use Junges\Kafka\Message\Message;
 use App\Events\PaymentDataReceived;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -22,45 +24,110 @@ class SyncPaymentData implements ShouldQueue
     public function handle(PaymentDataReceived $event): void
     {
         try {
-           // Extract the movie data from the event
+            // Extract the data from the event
             $data = json_decode($event->data);
 
             $user = User::where('id', $data->user_id)->first();
-            if ($user->member_activate_in) {
-                $user->update([
-                    'renewal_date' => Carbon::now(),
-                    'member_over_in' => Carbon::now()->addYear(),
-                ]);
+
+            $paymentDate = Carbon::parse($data->payment_date);
+
+            // Determine the membership end date based on payment month
+            $membershipEndDate = $paymentDate->copy();
+            if ($paymentDate->month <= 6) {
+                // Jan-June payment: End in June same year
+                $membershipEndDate->month(6)->endOfMonth();
             } else {
+                // July-Dec payment: End in June next year
+                $membershipEndDate->addYear()->month(6)->endOfMonth();
+            }
+
+            if (!$user->member_activate_in) {
+                // New registration - first time member
                 $user->update([
-                    'member_activate_in' => Carbon::now(),
-                    'member_over_in' => Carbon::now()->addYear(),
+                    'member_activate_in' => $paymentDate,
+                    'member_over_in' => $membershipEndDate,
                     'status' => $data->status,
                     'registrant_tag' => "MEMBER"
                 ]);
+
+                $uuid = $this->generateUniqueUuid($data->user_id);
+                $url = url('/dashboard/presence/update?uuid=' . $uuid);
+                $qrCode = QrCode::format('png')->size(150)->generate($url);
+                $filename = 'qrcodes/' . $uuid . '.png';
+                Storage::put('public/' . $filename, $qrCode);
+            } else {
+                // This is a renewal - they already have an activation date
+                $currentOverIn = Carbon::parse($user->member_over_in);       
+                
+                // If current membership is expired, calculate from payment date
+                if ($currentOverIn->isPast()) {
+                    $newOverIn = $paymentDate->copy();
+                    if ($paymentDate->format('n') <= 6) {
+                        $newOverIn->month(6)->endOfMonth();
+                    } else {
+                        $newOverIn->addYear()->month(6)->endOfMonth();
+                    }
+                } else {
+                    // If membership is still active, add one year to current end date
+                    $newOverIn = $currentOverIn->copy()->addYear();
+                }
+                
+                $user->update([
+                    'renewal_date' => $paymentDate,
+                    'member_over_in' => $newOverIn,
+                ]);
             }
 
-            $order = Order::where('user_id', $data->user_id)
-            ->update([
-                'status' => $data->status
-            ]);
+            // Update existing order status
+            Order::where('user_id', $data->user_id)
+                ->where('status', 'PENDING')  // Only update pending orders
+                ->update(['status' => $data->status]);
 
-            $uuid = $this->generateUniqueUuid($data->user_id);
-            $url = url('/dashboard/presence/update?uuid=' . $uuid);
-            $qrCode = QrCode::format('png')->size(150)->generate($url);
-            $filename = 'qrcodes/' . $uuid . '.png';
-            Storage::put('public/' . $filename, $qrCode);
-
-            echo "Updated User: ", print_r($user, true);
+            // Generate next billing after successful update
+            $this->generateNextBilling($user, $data->amount);
 
             Log::info('User data synchronized: ' . $data->user_id);
         } catch (Exception $e) {
-            // Log the error message
             Log::error('Error in handle method: ' . $e->getMessage());
+            throw $e; // Re-throw the exception to ensure proper error handling
         }
     }
 
-    function generateUniqueUuid(string $id)
+    private function generateNextBilling(User $user, float $amount): void
+    {
+        try {
+            $membershipEnd = Carbon::parse($user->member_over_in);
+            
+            // Create new order for next period
+            $order = Order::create([
+                'user_id' => $user->id,
+                'amount' => $amount,
+                'status' => 'PENDING',
+                'due_date' => $membershipEnd->format('Y-m-d H:i:s')  // Format as string explicitly
+            ]);
+
+            $registrantData = $order->toArray();
+            $registrantData['full_name'] = $user->full_name;
+            $registrantData['account'] = $user->virtual_account;
+
+            $message = new Message(
+                topicName: 'registrant-created',
+                headers: ['Content-Type' => 'application/json'],
+                body: $registrantData,
+                key: 'registrant-created'  
+            );
+        
+            $producer = Kafka::publishOn('registrant-created')->withMessage($message);
+            $producer->send();
+
+            Log::info('Generated next billing for user: ' . $user->id);
+        } catch (Exception $e) {
+            Log::error('Error generating next billing: ' . $e->getMessage());
+            throw $e; // Re-throw the exception to ensure proper error handling
+        }
+    }
+
+    private function generateUniqueUuid(string $id): string
     {
         do {
             // Generate a 10-digit UUID
@@ -71,7 +138,7 @@ class SyncPaymentData implements ShouldQueue
         Uuid::create([
             'uuid' => $uuid,
             'user_id' => $id,
-            'valid_on' => Carbon::now() // 8 Mei 2025
+            'valid_on' => Carbon::now()->format('Y-m-d H:i:s')  // Format as string explicitly
         ]);
 
         return $uuid;

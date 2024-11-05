@@ -41,16 +41,14 @@ class RegistrationApiController extends Controller
             'city' => ['required', 'string', 'max:255'],
             'province' => ['required', 'string', 'max:255'],
             'zip' => ['required', 'integer', 'digits_between:3,10'],
+            'phone_code' => ['required'],
             'phone_number' => ['required', 'digits_between:9,15'],
             'alternate_phone_number' => ['nullable', 'digits_between:9,15'],
-            'club_number' => ['nullable', 'integer'],
             'club_name' => ['nullable', 'string', 'max:255'],
             'email' => ['required', 'string', 'email:dns', 'max:255', 'unique:users'],  
-            'emergency_contact' => ['required', 'string', 'max:255'],
-            'emergency_phone_number' => ['required', 'digits_between:9,15'],
+            // 'emergency_contact' => ['required', 'string', 'max:255'],
+            // 'emergency_phone_number' => ['required', 'digits_between:9,15'],
             'district' => ['required'],
-            'terms' => ['required'],
-            'conditions' => ['required'],
             'password' => ['required', 'confirmed'],
         ]);
 
@@ -64,7 +62,6 @@ class RegistrationApiController extends Controller
             'full_name' => strtoupper($request->full_name),
             'email' =>  $request->email,
             'password' => Hash::make($request->password),
-            'registrant_tag' => 'REGULAR',
             'virtual_account' => $virtualAccount,
             'title' => $request->title,
             'address_1' => strtoupper($request->address_1),
@@ -74,14 +71,11 @@ class RegistrationApiController extends Controller
             'province' => strtoupper($request->province),
             'zip' => $request->zip,
             'phone_number' => $request->phone_code . $request->phone_number,
-            'alternate_phone_number' => $request->alternate_phone_number ? $request->alternate_phone_code . $request->alternate_phone_number : null,
-            'club_number' => $request->club_number,
+            'alternate_phone_number' => $request->alternate_phone_number ? $request->alternate_phone_code . $request->alternate_phone_number : null,            
             'club_name' => strtoupper($request->club_name),
-            'emergency_contact' => strtoupper($request->emergency_contact),
-            'emergency_phone_number' => $request->emergency_phone_code . $request->emergency_phone_number,
+            // 'emergency_contact' => strtoupper($request->emergency_contact),
+            // 'emergency_phone_number' => $request->emergency_phone_code . $request->emergency_phone_number,
             'district' => $request->district,
-            'terms' => $request->terms,
-            'conditions' => $request->conditions,
             'registrant_tag' => 'REGULAR'
         ]);       
 
@@ -264,7 +258,14 @@ class RegistrationApiController extends Controller
 
         $registeredData = User::where('id', auth()->user()->id)->first();
 
+        if ($registeredData->member_activate_in == null) {
+            return response()->json(['error' => 'You Must be an active member to register as aparticipant in this event.'], 401);
+        }
+
         $registrant = Registration::create([
+            'user_id' => $registeredData->id,
+            'full_name' => $registeredData->full_name,
+            'email' => $registeredData->email,
             'title' => $registeredData->title,
             'address_1' => strtoupper($registeredData->address_1),
             'address_2' => $registeredData->address_2 ? strtoupper($registeredData->address_2) : null,
@@ -281,10 +282,8 @@ class RegistrationApiController extends Controller
             'district' => $registeredData->district,
             'terms' => $registeredData->terms,
             'conditions' => $registeredData->conditions,
-            'registrant_tag' => 'MEMBER'
-        ]);         
-         
-        Auth::login($reguser);
+            'registrant_tag' => $registeredData->registrant_tag
+        ]);
 
         return response()->json(['message' => 'User registered successfully']);
     }

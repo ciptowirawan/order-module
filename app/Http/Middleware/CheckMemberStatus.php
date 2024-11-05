@@ -19,6 +19,10 @@ class CheckMemberStatus
     public function handle(Request $request, Closure $next): Response
     {
         $user = Auth::user();
+
+        if ($user->hasRole('admin')) {
+            return $next($request);
+        }
         
         if (!$user) {
             return redirect()->intended('/login');

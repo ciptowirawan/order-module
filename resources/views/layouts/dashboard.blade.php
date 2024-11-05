@@ -92,29 +92,42 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree"
                     aria-expanded="true" aria-controls="collapseThree">
                     <i class="fa-solid fa-people-group"></i>
-                    <span>Participants</span>
+                    <span>Members</span>
                 </a>
                 <div id="collapseThree" class="collapse" aria-labelledby="headingthree" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Manage Participants: </h6>
-                        <a class="collapse-item" href="/manage/unpaid">Unpaid Participants</a>
-                        <a class="collapse-item" href="/manage/paid">Paid Participants</a>
+                        <h6 class="collapse-header">Manage Members: </h6>
+                        <a class="collapse-item" href="/manage/unpaid">Inactive Members</a>
+                        <a class="collapse-item" href="/manage/paid">Active Members</a>
                     </div>
                 </div>
             </li>
 
-            
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseNine"
+                    aria-expanded="true" aria-controls="collapseNine">
+                    <i class="fa-solid fa-person-chalkboard"></i>
+                    <span>Participants</span>
+                </a>
+                <div id="collapseNine" class="collapse" aria-labelledby="headingNine" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Manage Participants: </h6>
+                        <a class="collapse-item" href="/dashboard/participants">Daftar Peserta Kegiatan</a>
+                        <a class="collapse-item" href="/dashboard/presence-unattended">Daftar Peserta Belum Hadir</a>
+                        <a class="collapse-item" href="/dashboard/presence-attended">Daftar Peserta Hadir</a>
+                    </div>
+                </div>
+            </li>
 
             <!-- Divider -->
-            <hr class="sidebar-divider">
+            {{-- <hr class="sidebar-divider">
 
-            <!-- Heading -->
             <div class="sidebar-heading">
                 Addons
-            </div>
+            </div> --}}
 
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                     aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder"></i>
@@ -125,10 +138,9 @@
                         <h6 class="collapse-header">Report Options:</h6>
                         <a class="collapse-item" href="/reports/user-summary">Registration Summary</a>
                         <a class="collapse-item" href="/reports/login-summary">Most Active Users</a>
-                        {{-- <a class="collapse-item" href="forgot-password.html">Forgot Password</a> --}}
                     </div>
                 </div>
-            </li>
+            </li> --}}
             @endrole
             {{-- <li class="nav-item">
                 <a class="nav-link" href="charts.html">
@@ -410,7 +422,7 @@
     
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script> --}}
 
     <script>
         feather.replace()

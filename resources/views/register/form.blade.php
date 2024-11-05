@@ -1,21 +1,24 @@
 @extends('layouts.header')
 @section('content')
 
-<form method="POST" action="/register/store" class="mb-5" style="background-color: #eee;">
+<form method="POST" id="form" action="/register/store" class="mb-5 p-3" style="background-color: #eee;">
     @csrf
     <!-- MultiStep Form -->
-    <div class="container-fluid" id="grad1">
-        <h4 class="pt-2 dynamic-form-title">Offline Registration</h4>
+    <div class="container-fluid" id="grad1">    
         <div class="row justify-content-center">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 p-0 mb-2">
                 <div class="card px-0 px-2 pb-0 mb-3">
                     <div class="row">
-                        <div class="col-md-12 mx-0">
+                        <div class="col-md-12">
                             <!-- progressbar -->
-                            <ul id="progressbar" class="d-flex justify-content-center">
+                            {{-- <ul id="progressbar" class="d-flex justify-content-center">
                                 <li class="active" id="account"><strong>Personal Information</strong></li>
+
+                                @if ($purpose == "individual")
                                 <li id="personal"><strong>Account</strong></li>
-                            </ul>
+                                <li id="payment"><strong>Payment</strong></li>
+                                @endif
+                            </ul> --}}
 
                             <h2><strong>Registration</strong></h2>
                             <p>Tell us about yourself</p>
@@ -30,9 +33,11 @@
                                 </div>
                             @endif
 
+                            <input type="hidden" name="purpose" value={{ $purpose }}>
+
                             <!-- fieldsets -->
                             <fieldset>
-                                <div class="text-md-start">
+                                {{-- <div class="text-md-start">
                                     <div class="col-md-12 mb-3">
                                         <label for="registration_type" class="type-title"><span class="requiredcol">*</span>  Registration Type</label>
                                         <div class="form-check">
@@ -54,7 +59,7 @@
                                             </label>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
 
                                 <div class="form-card row">
                                     <div class="input-header">
@@ -106,9 +111,9 @@
                                         <h4>Address</h4>
                                     </div>
                                     <div class="col-md-12">
-                                        <label for="address_1" class="type-title"><span class="requiredcol">*</span> Address</label>
+                                        <label for="address_1" class="type-title">Address</label>
 
-                                        <input id="address_1" type="text" class="form-control @error('address_1') is-invalid @enderror required-field" name="address_1" value="{{ old('address_1') }}" required autocomplete="address_1">
+                                        <input id="address_1" type="text" class="form-control @error('address_1') is-invalid @enderror required-field" name="address_1" value="{{ old('address_1') }}" autocomplete="address_1">
                     
                                         @error('address_1')
                                             <span class="invalid-feedback" role="alert">
@@ -131,7 +136,8 @@
                                         <label for="country" class="type-title"><span class="requiredcol">*</span> Country/Region</label>
 
                                         <div class="input-group">
-                                            <select class="form-control form-select @error('country') is-invalid @enderror required-field" id="country" name="country" value="{{ old('country') }}" required>
+                                            <select class="form-control form-select @error('country') is-invalid @enderror required-field" id="country" name="country" value="{{ old('country') }}" required 
+                                            >
                                             <option value=""></option>
                                             @foreach ($countries as $country)
                                                 <option value="{{$country['name']}}" {{ old("country") == $country['name'] ? "selected" : "" }}>{{$country['name']}}</option>
@@ -168,9 +174,9 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-6 ">
-                                        <label for="zip" class="type-title"><span class="requiredcol">*</span> ZIP/Postal Code</label>
+                                        <label for="zip" class="type-title">ZIP/Postal Code</label>
 
-                                        <input id="zip" type="text" class="form-control @error('zip') is-invalid @enderror required-field" name="zip" value="{{ old('zip') }}" required autocomplete="zip">
+                                        <input id="zip" type="text" class="form-control @error('zip') is-invalid @enderror required-field" name="zip" value="{{ old('zip') }}" autocomplete="zip">
                     
                                         @error('zip')
                                             <span class="invalid-feedback" role="alert">
@@ -178,11 +184,12 @@
                                             </span>
                                         @enderror
                                     </div>
-
+  
+                                    @if ($purpose == "individual")
                                     <div class="col-md-6">
-                                        <label for="email" class="type-title"><span class="requiredcol">*</span>  Email Address <small>(unique email is required)</small></label>
+                                        <label for="email" class="type-title"><span class="requiredcol">*</span>  Email Address {{ $purpose == "individual" ? "(unique email is required)" : ""}}</label>
 
-                                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror required-field" name="email" value="{{ old('email') }}" required autocomplete="email">
+                                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror required-field" name="email" value="{{ old('email') }}"  autocomplete="email" required>
                     
                                         @error('email')
                                             <span class="invalid-feedback" role="alert">
@@ -190,6 +197,7 @@
                                             </span>
                                         @enderror
                                     </div>
+                                    @endif
 
                                     <div class="col-md-6">
                                         <label for="phone_number" class="type-title"><span class="requiredcol">*</span> Mobile</label>
@@ -199,7 +207,7 @@
                                                 <select class="form-select @error('phone_code') is-invalid @enderror required-field" id="phone_code" name="phone_code" required>
                                                     <option selected></option>
                                                     @foreach ($countries as $country)
-                                                    <option style="font-size: 16px; white-space: pre;" value="{{$country['code']}}" >{{ '(' .$country['code'] . ') '}} &nbsp;&nbsp;&nbsp; {{$country['name']}}</option>
+                                                    <option style="font-size: 16px; white-space: pre;" value="{{$country['code']}}" >{{ '(' .$country['code'] . ') '}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -220,7 +228,8 @@
                                                 <select class="form-select @error('alternate_phone_code') is-invalid @enderror" id="alternate_phone_code" name="alternate_phone_code">
                                                     <option selected></option>
                                                     @foreach ($countries as $country)
-                                                    <option style="font-size: 16px" value="{{$country['code']}}" >{{ '(' .$country['code'] . ') '}} &nbsp;&nbsp;&nbsp; {{$country['name']}}</option>
+                                                    <!-- <option style="font-size: 16px" value="{{$country['code']}}" >{{ '(' .$country['code'] . ') '}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{$country['name']}}</option> -->
+                                                    <option style="font-size: 16px" value="{{$country['code']}}" >{{ '(' .$country['code'] . ') '}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -245,6 +254,7 @@
                                             <option value="MD307-A2" {{ old("district") == 'MD307-A2' ? "selected" : "" }}>MD307-A2</option>
                                             <option value="MD307-B1" {{ old("district") == 'MD307-B1' ? "selected" : "" }}>MD307-B1</option>
                                             <option value="MD307-B2" {{ old("district") == 'MD307-B2' ? "selected" : "" }}>MD307-B2</option>
+                                            {{-- <option value="Others" {{ old("district") == 'Others' ? "selected" : "" }}>Others</option> --}}
                                             </select>
                                         </div>
                                 
@@ -255,7 +265,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-md-6">
+                                    <div class="col-md-12">
                                         <label for="club_name" class="type-title">Club Name</label>
 
                                         <input id="club_name" type="text" class="form-control @error('club_name') is-invalid @enderror" name="club_name" value="{{ old('club_name') }}" autocomplete="club_name">
@@ -267,7 +277,34 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-md-6">
+                                    @if ($purpose == "individual")
+
+                                    <div class="col-md-12 mb-3">
+                                        <label for="password" class="col-form-label text-md-end bold"><span class="requiredcol">*</span> Password</label>
+                                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror required-field" name="password" value="" autocomplete="password" {{$purpose == "individual" ? 'required' : ''}}>
+                                        <span style="color: grey">Password must contain at least 8 characters</span>
+                                
+                                        @error('password')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                
+                                    <div class="col-md-12">
+                                        <label for="password-confirm" class="col-form-label text-md-end bold"><span class="requiredcol">*</span> Confirm Password</label>
+                                        <input id="password-confirm" type="password" class="form-control @error('password-confirm') is-invalid @enderror required-field" name="password_confirmation" value="" autocomplete="password" {{$purpose == "individual" ? 'required' : ''}}>
+                                
+                                        @error('password-confirm')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                    @endif
+
+
+                                    {{-- <div class="col-md-6">
                                         <label for="club_number" class="type-title">Club Number</label>
 
                                         <input id="club_number" type="text" class="form-control @error('club_number') is-invalid @enderror" name="club_number" value="{{ old('club_number') }}" autocomplete="club_number">
@@ -297,7 +334,7 @@
                                                 <select class="form-select @error('emergency_phone_code') is-invalid @enderror required-field" id="emergency_phone_code" name="emergency_phone_code" required>
                                                     <option selected></option>
                                                     @foreach ($countries as $country)
-                                                    <option style="font-size: 16px" value="{{$country['code']}}" >{{ '(' .$country['code'] . ') '}} &nbsp;&nbsp;&nbsp; {{$country['name']}}</option>
+                                                    <option style="font-size: 16px" value="{{$country['code']}}" >{{ '(' .$country['code'] . ') '}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -336,15 +373,23 @@
                                             </label>
                                           </div>
                                     </div>
-                                </div>
+                                </div> --}}
                                 
-                                <input type="button" name="next" class="btn btn-dark next action-button" value="Next Step"/>
+                                {{-- @if ($purpose == "individual")
+                                <input type="button" name="next" class="btn btn-dark next action-button"  value="Next Step"/>
+                                @endif --}}
+                                <div class="row justify-content-center">
+                                    <button type="submit" class="btn text-light bold">
+                                        Submit
+                                    </button>
+                                </div>
+
                             </fieldset>
-                            <fieldset>
+                            {{-- <fieldset>
                                 <div class="form-card">
                                     <div class="col-md-12 mb-3">
                                         <label for="password" class="col-form-label text-md-end bold"><span class="requiredcol">*</span> Password</label>
-                                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror required-field" name="password" value="" autocomplete="password" required>
+                                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror required-field" name="password" value="" autocomplete="password" {{$purpose == "individual" ? 'required' : ''}}>
                                         <span style="color: grey">Password must contain at least 8 characters</span>
                                 
                                         @error('password')
@@ -356,7 +401,7 @@
                                 
                                     <div class="col-md-12">
                                         <label for="password-confirm" class="col-form-label text-md-end bold"><span class="requiredcol">*</span> Confirm Password</label>
-                                        <input id="password-confirm" type="password" class="form-control @error('password-confirm') is-invalid @enderror required-field" name="password_confirmation" value="" autocomplete="password" required>
+                                        <input id="password-confirm" type="password" class="form-control @error('password-confirm') is-invalid @enderror required-field" name="password_confirmation" value="" autocomplete="password" {{$purpose == "individual" ? 'required' : ''}}>
                                 
                                         @error('password-confirm')
                                         <span class="invalid-feedback" role="alert">
@@ -365,17 +410,83 @@
                                         @enderror
                                     </div>
                                 </div>
+                                <input type="button" name="previous" class="btn btn-secondary previous action-button-previous" value="Previous"/>
+                                <input type="button" name="next" class="btn btn-dark next action-button" value="Next Step"/>
+                            </fieldset>
+                            <fieldset>
+                                <div class="form-card">
+                                    <h2 class="fs-title">Payment Information</h2>
+                                    <div class="radio-group">
+                                        <div class='radio' data-value="credit"><img src="https://i.imgur.com/XzOzVHZ.jpg" width="200px" height="100px"></div>
+                                        <div class='radio' data-value="paypal"><img src="https://i.imgur.com/jXjwZlj.jpg" width="200px" height="100px"></div>
+                                        <br>
+                                    </div>
+                                    <label class="pay">Card Holder Name*</label>
+                                    <input type="text" name="holdername" placeholder=""/>
+                                    <div class="row">
+                                        <div class="col-9">
+                                            <label class="pay">Card Number*</label>
+                                            <input type="text" name="cardno" placeholder=""/>
+                                        </div>
+                                        <div class="col-3">
+                                            <label class="pay">CVC*</label>
+                                            <input type="password" name="cvcpwd" placeholder="***"/>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3">
+                                            <label class="pay">Expiry Date*</label>
+                                        </div>
+                                        <div class="col-9">
+                                            <select class="list-dt" id="month" name="expmonth">
+                                                <option selected>Month</option>
+                                                <option>January</option>
+                                                <option>February</option>
+                                                <option>March</option>
+                                                <option>April</option>
+                                                <option>May</option>
+                                                <option>June</option>
+                                                <option>July</option>
+                                                <option>August</option>
+                                                <option>September</option>
+                                                <option>October</option>
+                                                <option>November</option>
+                                                <option>December</option>
+                                            </select>
+                                            <select class="list-dt" id="year" name="expyear">
+                                                <option selected>Year</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
                                 <input type="button" name="previous" class="previous action-button-previous" value="Previous"/>
-
                                 <button type="submit" class="btn text-light bold">
                                     Submit
                                 </button>
-                            </fieldset>
+                            </fieldset> --}}
+                            {{-- <fieldset>
+                                <div class="form-card">
+                                    <h2 class="fs-title text-center">Success !</h2>
+                                    <br><br>
+                                    <div class="row justify-content-center">
+                                        <div class="col-3">
+                                            <img src="https://img.icons8.com/color/96/000000/ok--v2.png" class="fit-image">
+                                        </div>
+                                    </div>
+                                    <br><br>
+                                    <div class="row justify-content-center">
+                                        <div class="col-7 text-center">
+                                            <h5>You Have Successfully Signed Up</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset> --}}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </form>
 
@@ -401,9 +512,18 @@
     <link rel="stylesheet" href="{{ asset('css/register.css') }}">
 @endonce
 @endpush
-@push('body-scripts')
-@once
-    <script src="{{ asset('js/register.js') }}"></script>
-@endonce
-@endpush
+@if ($purpose == "individual")
+    @push('body-scripts')
+    @once
+        <script src="{{ asset('js/register.js') }}"></script>
+    @endonce
+    @endpush
+@else
+    @push('body-scripts')
+    @once
+        <script src="{{ asset('js/edit.js') }}"></script>
+    @endonce
+    @endpush
+@endif
+
 @endsection

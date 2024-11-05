@@ -1,34 +1,22 @@
 @extends('layouts.dashboard')
 
 @section('content')
-<form method="POST" action="/manage/admin/edit/{{ $data->id }}">
+<form method="POST" action="/manage/admin/update/{{ $data->id }}">
     @method('PUT')
     @csrf
     
     <div class="row mt-3 mb-3" style="color:black">
       <div class="col-md-6 mb-3">
-          <label for="first_name" class="col-form-label text-md-end bold">{{ __('First Name') }}</label>
+          <label for="full_name" class="col-form-label text-md-end bold">{{ __('Full Name') }}</label>
           <span class="requiredcol">*</span>
-              <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ $data->first_name }}" required autocomplete="first_name" autofocus>
-      
-              @error('first_name')
-                  <span class="invalid-feedback" role="alert">
-                  <strong>{{ $message }}</strong>
-                  </span>
-              @enderror
+            <input id="full_name" type="text" class="form-control @error('full_name') is-invalid @enderror" name="full_name" value="{{ $data->full_name }}" required autocomplete="full_name" autofocus>
+    
+            @error('full_name')
+                <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+                </span>
+            @enderror
       </div>
-    
-      <div class="col-md-6">
-        <label for="last_name" class="col-form-label text-md-end bold">{{ __('Last Name') }}</label>
-        <span class="requiredcol">*</span>
-          <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ $data->last_name }}" required autocomplete="last_name" autofocus>
-    
-          @error('last_name')
-            <span class="invalid-feedback" role="alert">
-              <strong>{{ $message }}</strong>
-            </span>
-          @enderror
-        </div>
     
       <div class="col-md-6">
         <label for="email" class="col-form-label text-md-end bold">{{ __('Email') }}</label>

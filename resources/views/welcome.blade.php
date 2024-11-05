@@ -17,9 +17,13 @@
         <hr class="small-hr">
 
         <h1>Lions MD307 <br> Convention 2024 Indonesia</h1>
-        <p>The Lions International Convention is happening June 00-00, 2024. Celebrate service with your fellow <br> Lions and Leos in one of the most unique and exciting travel destinations in the world — beautiful Indonesia!</p>
+        <p>The Lions International Convention is happening May 8-11, 2025. Celebrate service with your fellow <br> Lions and Leos in one of the most unique and exciting travel destinations in the world — beautiful Indonesia!</p>
     </div>
-        <a href="/register/event"><button class="btn register-button">Register Now</button></a>
+      @if ($registered)
+      <button class="btn register-button" href="#">you are already registered, make sure to arrive on time!</button>  
+      @else
+      <button class="btn register-button" onclick="confirmRegistration()">Register Now</button>
+      @endif
 </div>
 
 <div class="card-group mt-2">
@@ -72,10 +76,14 @@
             <div class="img-fluid card">
                 <div class="card-body">
                   <h5 class="card-title">When</h5>
-                  <p class="card-text">June 21-25, 2024</p>
+                  <p class="card-text">May 8-11, 2025</p>
                   <h5 class="card-title">Where</h5>
                   <p class="card-text">Pontianak, Indonesia</p>
-                  <a href="/register/event"><button class="btn register-button">Register Now</button></a> 
+                  @if ($registered)
+                    <button class="btn register-button" href="#">you are already registered!</button>  
+                  @else
+                    <button class="btn register-button" onclick="confirmRegistration()">Register Now</button>
+                  @endif
                 </div>
               </div>
         </div>
@@ -146,4 +154,49 @@
     <script src="{{ asset('js/welcome.js') }}"></script>
 @endonce
 @endpush
+
+<script>
+  function confirmRegistration() {
+    const swal = window.Sweetalert2;
+    
+    swal.fire({
+        title: 'Registration Confirmation',
+        text: 'Are you sure you want to register for this event?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, register!',
+        cancelButtonText: 'No, cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Show loading state
+            swal.fire({
+                title: 'Processing...',
+                text: 'Processing your registration',
+                didOpen: () => {
+                    swal.showLoading()
+                },
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                showConfirmButton: false
+            });
+
+            // Create and submit form
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '/register/event';
+            
+            const csrfToken = document.createElement('input');
+            csrfToken.type = 'hidden';
+            csrfToken.name = '_token';
+            csrfToken.value = '{{ csrf_token() }}';
+            form.appendChild(csrfToken);
+            
+            document.body.appendChild(form);
+            form.submit();
+        }
+    });
+}
+  </script>
 @endsection
