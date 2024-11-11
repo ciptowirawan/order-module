@@ -53,7 +53,7 @@
                     <p class="mb-0">Country</p>
                 </div>
                 <div class="col-sm-8">
-                    <p class="text-muted mb-0">{{ $member->country ?? '-' }}</p>
+                    <p class="text-muted mb-0">{{ $member->country ? strtoupper($member->country) : '-' }}</p>
                 </div>
                 </div>
                 <hr>

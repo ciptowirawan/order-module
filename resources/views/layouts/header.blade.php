@@ -26,15 +26,17 @@
     <div class="top-header-banner pt-0 shadow-sm">
         <div class="row col-md-12 mb-1">
             <div class="col-md-5 d-flex flex-column justify-content-center navbar-text text-start">
-                <a href="/" class="text-decoration-none text-dark">Lions MD307 Convention | Indonesia</a>
+                <a href="/" class="text-decoration-none text-dark">Lions Clubs Multiple District 307 Indonesia</a>
             </div>
             @guest
             <div class="col-md-4 d-flex flex-column justify-content-center text-center">
                 <a href="/register/create"><button class="btn register-button w-100 p-2" style="margin-left: 0 !important">Join Membership</button></a>
             </div>
+            <div class="col-md-3 d-flex flex-column justify-content-center">
+            @else
+            <div class="col-md-7 d-flex flex-column justify-content-center">
             @endguest
 
-            <div class="col-md-3 d-flex flex-column justify-content-center">
 
                 <ul class="navbar-nav ms-auto" style="list-style-type: none">
                     @auth

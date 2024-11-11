@@ -16,13 +16,20 @@
         <h6>106th annual convention</h6>
         <hr class="small-hr">
 
-        <h1>Lions MD307 <br> Convention 2024 Indonesia</h1>
+        <h1>Lions MD307 <br> Convention 2025 Indonesia</h1>
         <p>The Lions International Convention is happening May 8-11, 2025. Celebrate service with your fellow <br> Lions and Leos in one of the most unique and exciting travel destinations in the world — beautiful Indonesia!</p>
     </div>
       @if ($registered)
       <button class="btn register-button" href="#">you are already registered, make sure to arrive on time!</button>  
       @else
+
+      @auth
       <button class="btn register-button" onclick="confirmRegistration()">Register Now</button>
+          @else
+      <a href="{{ route('login') }}">
+        <button class="btn register-button">Register Now</button>
+      </a>
+      @endauth
       @endif
 </div>
 

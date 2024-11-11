@@ -79,7 +79,7 @@
         <thead>
         <tr>
             <th>No.</th>
-            <th>Registration Type</th>
+            <th>District</th>
             <th>Full Name</th>
             <th>Club Name</th>
             <th>Title</th>            

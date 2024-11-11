@@ -65,7 +65,7 @@ class RegistrationApiController extends Controller
             'virtual_account' => $virtualAccount,
             'title' => $request->title,
             'address_1' => strtoupper($request->address_1),
-            'address_2' => $request->address_2,
+            'address_2' => strtoupper($request->address_2),
             'country' => $request->country,
             'city' => strtoupper($request->city),
             'province' => strtoupper($request->province),

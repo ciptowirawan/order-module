@@ -55,9 +55,9 @@ class AdminController extends Controller
         $reguser->syncRoles('admin');
         $reguser->syncPermissions($perm);       
     
-        Auth::login($reguser);
+        // Auth::login($reguser);
     
-        return redirect('/dashboard')->with('success', 'Kami telah mengirimkan tautan verifikasi ke Alamat Email anda. Silahkan cek email anda dan ikuti instruksinya untuk melanjutkan proses verifikasi email.');
+        return redirect('/manage/admin')->with('success', 'Berhasil Menambahkan Admin!');
     }
 
     public function update(string $id, Request $request) {
