@@ -2,7 +2,7 @@
     <table style="width: 100%; background: #f0f0f0; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
       <tr>
           <td style="background: #222; color: #fff; text-align: center; padding: 20px;border-radius: 10px 10px 0 0;">
-              <h4 style="margin: 0;">Lions MD 307 Convention<br>Indonesia</h4>
+              <h4 style="margin: 0;">Lions Clubs Multiple District 307</h4>
           </td>
       </tr>
       <tr>

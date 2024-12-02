@@ -79,16 +79,18 @@ Route::prefix('/manage')->group(function() {
     Route::get('/export-pdf-paid', [ParticipantController::class, 'exportPaidParticipantsAsPdf'])->middleware('auth', 'is_admin')->name('export-paid-pdf');
     Route::get('/export-pdf-paid/{district}', [ParticipantController::class, 'exportPaidAsPdfParticipantsByDistrict'])->middleware('auth', 'is_admin')->name('export-paid-pdf-by-district');
 
-    Route::get('/admin', [AdminController::class, 'index'])->middleware('auth', 'is_admin');
-    Route::get('/admin/create', [AdminController::class, 'create'])->middleware('auth', 'is_admin');
-    Route::get('/admin/edit/{id}', [AdminController::class, 'edit'])->middleware('auth', 'is_admin');
-    Route::post('/admin/store', [AdminController::class, 'store'])->middleware('auth', 'is_admin');
-    Route::put('/admin/update/{id}', [AdminController::class, 'update'])->middleware('auth', 'is_admin');
-    Route::delete('/admin/destroy/{id}', [AdminController::class, 'destroy'])->middleware('auth', 'is_admin');
+    Route::get('/admin', [AdminController::class, 'index'])->middleware('auth', 'is_admin_administrator');
+    Route::get('/admin/create', [AdminController::class, 'create'])->middleware('auth', 'is_admin_administrator');
+    Route::get('/admin/edit/{id}', [AdminController::class, 'edit'])->middleware('auth', 'is_admin_administrator');
+    Route::post('/admin/store', [AdminController::class, 'store'])->middleware('auth', 'is_admin_administrator');
+    Route::put('/admin/update/{id}', [AdminController::class, 'update'])->middleware('auth', 'is_admin_administrator');
+    Route::delete('/admin/destroy/{id}', [AdminController::class, 'destroy'])->middleware('auth', 'is_admin_administrator');
 });
 
 Route::prefix('/dashboard')->group(function() {
     Route::get('/', [DashboardController::class, 'index'])->middleware('is_active_member');     
+    Route::get('/password/form', [DashboardController::class, 'form_password'])->middleware('auth');     
+    Route::post('/password/change', [DashboardController::class, 'change_password'])->middleware('auth');
     Route::get('/presence-unattended', [PresenceController::class, 'index'])->middleware('auth', 'is_admin'); 
     Route::get('/presence-attended', [PresenceController::class, 'index_attended'])->middleware('auth', 'is_admin'); 
     Route::get('/participants', [PresenceController::class, 'index_participants'])->middleware('auth', 'is_admin'); 
@@ -107,11 +109,11 @@ Route::prefix('/dashboard')->group(function() {
 //     return view('auth.verify');
 // })->middleware('auth')->name('verification.notice');
 
-// Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-//     $request->fulfill();
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
  
-//     return redirect('/dashboard');
-// })->middleware(['auth', 'signed'])->name('verification.verify');
+    return redirect('/dashboard');
+})->middleware(['auth', 'signed'])->name('verification.verify');
 
 // Route::post('/email/verification-notification', function (Request $request) {
 //     $request->user()->sendEmailVerificationNotification();

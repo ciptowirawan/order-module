@@ -83,7 +83,8 @@
             <th>Full Name</th>
             <th>Club Name</th>
             <th>Title</th>            
-            <th>Check In</th>
+            <th>Checked In On</th>
+            <th>Checked In By</th>
         </tr>
         </thead>
         <tbody>   
@@ -95,6 +96,7 @@
             <td>{{ $pendaftar->club_name == "" || $pendaftar->club_name == null ? '-' : $pendaftar->club_name }}</td>
             <td>{{ $pendaftar->title ?? '-' }}</td>
             <td>{{ $pendaftar->updated_at ?? '-' }}</td>
+            <td>{{ $pendaftar->admin->full_name ?? '-' }}</td>
             {{-- <td align="center" class="d-flex justify-content-around" style="gap: 10px">
                 <button type="button" class="btn btn-info bold font-weight-bold" data-toggle="modal" data-target="#presence{{ $pendaftar->id }}">Confirm Presence</button>
             </td> --}}

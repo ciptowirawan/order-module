@@ -28,13 +28,13 @@ class DatabaseSeeder extends Seeder
 
         User::create([
             'full_name' => 'MD307conv Admin',
-            'email' => 'md307conv@admin.com',
+            'email' => 'ciptowirawan.CW@gmail.com',
             'password' => Hash::make('progress#2023')
         ]);
 
         Event::create([
             'event_name' => "membership",
-            'amount' => 1680000
+            'amount' => 1500000
         ]);
 
         // OpenRegistration::create([

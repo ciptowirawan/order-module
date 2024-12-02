@@ -16,7 +16,6 @@ class MemberMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-
         if (auth()->user()->registrant_tag == "MEMBER") {
             return $next($request);
         } else {

@@ -26,7 +26,7 @@
     <div class="top-header-banner pt-0 shadow-sm">
         <div class="row col-md-12 mb-1">
             <div class="col-md-5 d-flex flex-column justify-content-center navbar-text text-start">
-                <a href="/" class="text-decoration-none text-dark">Lions Clubs Multiple District 307 Indonesia</a>
+                <a href="/" class="text-decoration-none text-dark">Lions Clubs Multiple District 307</a>
             </div>
             @guest
             <div class="col-md-4 d-flex flex-column justify-content-center text-center">
@@ -52,18 +52,29 @@
                                 aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="/dashboard">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
+                                    Dashboard
                                 </a>
-                                @role('admin')
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Manage Admins
+                                @role('admin-administrator')
+                                    <a class="dropdown-item" href="/manage/admin">
+                                        <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Manage Admins
+                                    </a>
+                                @endrole
+                                @role('admin|admin-administrator')
+                                <a class="dropdown-item" href="/manage/paid">
+                                    <i class="fas fa-user-group fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Manage Members
                                 </a>
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="/dashboard/participants">
                                     <i class="fas fa-user-group fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Manage Participants
                                 </a>
                                 @endrole
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="/dashboard/password/form">
+                                    <i class="fas fa-cogs fa-sm mr-2 text-gray-400"></i>
+                                    Change Password
+                                </a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>

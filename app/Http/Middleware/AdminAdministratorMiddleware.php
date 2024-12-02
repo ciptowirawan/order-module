@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class AdminMiddleware
+class AdminAdministratorMiddleware
 {
     /**
      * Handle an incoming request.
@@ -15,7 +15,7 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->user()->hasRole(['admin', 'admin-administrator'])) {
+        if (auth()->user()->hasRole(['admin-administrator'])) {
             return $next($request);
         } else {
             abort(403);

@@ -64,7 +64,7 @@
                                 <div class="form-card row">
                                     <div class="input-header">
                                         <h2 class="fs-title">Personal Information</h2>
-                                        <p>Fill out the information below, then click Next to continue.</p>
+                                        <p>Fill out the information below, then click Submit to continue.</p>
                                     </div>
                                     <div class="col-md-12">
                                         <label for="full_name" class="type-title"><span class="requiredcol">*</span> Full Name</label>

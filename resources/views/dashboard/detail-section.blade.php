@@ -102,7 +102,7 @@
                 </div>
                 </div>
                 <hr>
-                <div class="row">
+                {{-- <div class="row">
                 <div class="col-sm-4">
                     <p class="mb-0">Club Number</p>
                 </div>
@@ -110,7 +110,7 @@
                     <p class="text-muted mb-0">{{ $member->club_number ?? '-' }}</p>
                 </div>
                 </div>
-                <hr>
+                <hr> --}}
                 <div class="row">
                 <div class="col-sm-4">
                     <p class="mb-0">Club Name</p>
@@ -120,7 +120,7 @@
                 </div>
                 </div>
                 <hr>
-                <div class="row">
+                {{-- <div class="row">
                 <div class="col-sm-4">
                     <p class="mb-0">Emergency Contact</p>
                 </div>
@@ -137,7 +137,7 @@
                     <p class="text-muted mb-0">{{ $member->emergency_phone_number }}</p>
                 </div>
                 </div>
-                <hr>
+                <hr> --}}
                 <div class="row">
                 <div class="col-sm-4">
                     <p class="mb-0">District</p>

@@ -20,7 +20,7 @@ class CheckMemberStatus
     {
         $user = Auth::user();
 
-        if ($user->hasRole('admin')) {
+        if ($user->hasRole('admin|admin-administrator')) {
             return $next($request);
         }
         
@@ -48,7 +48,7 @@ class CheckMemberStatus
                 </script>
             ", 'warning')->persistent(true, false);
             
-            return redirect('/dashboard');
+            // return redirect('/dashboard');
         }
 
         $virtualAccount = $user->virtual_account ?? 'N/A';
@@ -77,7 +77,7 @@ class CheckMemberStatus
                 </div>
             ", 'warning')->persistent(true, false);
             
-            return redirect('/dashboard');
+            // return redirect('/dashboard');
         } elseif (in_array($daysRemaining, [30, 60, 90, 120])) {
         
             echo "<script>

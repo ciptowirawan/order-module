@@ -50,7 +50,7 @@
             <h6 class="m-0 font-weight-bold text-primary">Membership Payment Details</h6>
         </div>
         <div class="card-body py-3">
-            <h5 class="mb-2 font-weight-bold text-dark">Lions MD-307 Indonesia</h5>
+            <h5 class="mb-2 font-weight-bold text-dark">Lions Clubs Multiple District 307</h5>
             <h5 class="mb-4 text-dark">Biaya Pendaftaran: <b>IDR {{ number_format($amount,0) }}</b></h5>
             <div class="p-3 border" style="width: 300px; background:#c5c7c5ec">
                 <strong id='virtualAccount'>{{$member->virtual_account}}</strong><br>

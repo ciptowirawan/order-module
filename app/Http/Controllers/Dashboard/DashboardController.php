@@ -2,18 +2,23 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use Validator;
 use App\Models\User;
 use App\Models\Uuid;
 use App\Models\Order;
 use App\Models\Registration;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
+use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Validation\ValidationException;
 
 class DashboardController extends Controller
 {
     public function index() {
 
-        if (auth()->user()->hasRole('admin')) {
+        if (auth()->user()->hasRole('admin|admin-administrator')) {
 
             $registrations = User::all();
 
@@ -78,7 +83,8 @@ class DashboardController extends Controller
             return View('dashboard.index-admin', compact('totalRegistrants', 'totalPaidRegistrants', 'totalUnpaidRegistrants', 'totalNotIdentifiedRegistrants', 'registrationsByMonth', 'CC_percent', 'DG_percent', 'PCC_percent', 'PDG_percent', 'RC_percent', 'ZC_percent', 'CP_percent', 'CS_percent', 'Unknown_percent', 'A1', 'A2', 'B1', 'B2', 'Others', 'A1_percent', 'A2_percent', 'B1_percent', 'B2_percent', 'Others_percent', 'CC', 'DG', 'PCC', 'PDG', 'RC', 'ZC', 'CP', 'CS', 'unknownTitle'
             // 'Lion_percent', 'Leo_percent', 'Adult_percent'
             ));
-        } else {
+        }
+        if (auth()->user()->hasRole('user')) {
 
             $member = User::where('id',auth()->user()->id)->first();
 
@@ -111,5 +117,51 @@ class DashboardController extends Controller
         // } 
         //     }
         }
+    }
+
+    public function form_password() {
+        return view('dashboard.password.edit');
+    }
+
+    public function change_password(Request $request) {
+        $user = auth()->user();
+
+        $validator = Validator::make($request->all(), [
+            'old_password' => ['required', 'string', 'min:8'],
+            'password' => ['required', 'string', 'min:8', 'confirmed']
+        ]); 
+        
+        // if there's error
+        if (count($validator->errors()->toArray()) > 0) {
+            $error_message = $validator->errors()->all();
+            $error = ValidationException::withMessages($error_message);
+
+            // Concatenate error messages into a single string with bullet points
+            $errorList = '<ul>';
+            foreach ($error_message as $message) {
+                $errorList .= '<li>' . $message . '</li><br>';
+            }
+            $errorList .= '</ul>';
+
+            // Create a SweetAlert toast with the error messages
+            Alert::html('Validation Errors', $errorList, 'error')->autoClose(false);
+            return Redirect::back()->with('toast_error')->withInput($request->input())->withErrors($validator);
+        }
+
+        if (!Hash::check($request->old_password, $user->password)) {
+
+            Alert::error('Current password is incorrect')->autoClose(false);
+            
+            return Redirect::back()
+                ->with('toast_error', 'Current password is incorrect')
+                ->withInput();
+        }
+
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        Alert::success('Success!', 'Changes has been updated!');
+
+        return redirect('/dashboard')->with('success', 'Password has been changed successfully!');
     }
 }

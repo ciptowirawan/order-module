@@ -84,6 +84,7 @@
             <th>Club Name</th>
             <th>Title</th>            
             <th>Devotional Period</th>
+            <th>Actions</th>
         </tr>
         </thead>
         <tbody>   
@@ -95,6 +96,9 @@
             <td>{{ $pendaftar->club_name == "" || $pendaftar->club_name == null ? "-" : $pendaftar->club_name }}</td>
             <td>{{ $pendaftar->title ?? '-'}}</td>
             <td><b class="badge bg-success text-light fs-6">{{ date('Y', strtotime($pendaftar->user->member_activate_in)). " - " . date('Y', strtotime($pendaftar->user->member_over_in))}}</b></td>
+            <td align="center" class="d-block justify-content-center">
+                <a href="/details/show/{{ $pendaftar->user->id }}" class="btn bg-primary btn-sm text-light bold mx-2">Lihat Detail</a>
+            </td>
         </tr>
 
         <div class="modal hide fade in" tabindex="-1" id="presence{{ $pendaftar->id }}" role="dialog">

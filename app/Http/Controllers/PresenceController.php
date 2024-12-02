@@ -43,12 +43,15 @@ class PresenceController extends Controller
         $search = $request->search;
 
         $pendaftaran = Registration::Where('registrations.status_kehadiran', 'HADIR'
-        )->Where(function ($query) use ($search) {
+        )->with('admin')->Where(function ($query) use ($search) {
             $query->orWhere('registrations.full_name', 'LIKE', '%'.$search.'%'
             )->orWhere('registrations.title', 'LIKE', '%'.$search.'%'
             )->orWhere('registrations.club_name', 'LIKE', '%'.$search.'%'
             )->orWhere('registrations.district', 'LIKE', '%'.$search.'%'
-            )->orWhere('registrations.status_kehadiran', 'LIKE', '%'.$search.'%');
+            )->orWhere('registrations.status_kehadiran', 'LIKE', '%'.$search.'%'
+            )->orWhereHas('admin', function($q) use ($search) {
+                $q->where('full_name', 'LIKE', '%'.$search.'%');
+            });
         })->paginate(20);
 
         return view('manage.participant.index-attended', compact('pendaftaran'));
@@ -149,7 +152,8 @@ class PresenceController extends Controller
             if ($now->greaterThanOrEqualTo(Carbon::parse($uuidData->valid_on))) {
                 // Update the presence status
                     $registrant->update([
-                        "status_kehadiran" => "HADIR"
+                        "status_kehadiran" => "HADIR",
+                        "updated_by" => auth()->user()->id
                     ]);
         
                 return response()->json(['success' => 'UUID is valid, presence confirmed.'], 200);

@@ -15,4 +15,8 @@ class Registration extends Model
     public function user() {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function admin() {
+        return $this->belongsTo(User::class, 'updated_by');
+    }
 }

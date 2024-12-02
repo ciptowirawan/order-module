@@ -13,7 +13,7 @@
     </div>
   @endif
     <div class="title-text">
-        <h6>106th annual convention</h6>
+        <h6>49th MD 307 Lions Convention</h6>
         <hr class="small-hr">
 
         <h1>Lions MD307 <br> Convention 2025 Indonesia</h1>

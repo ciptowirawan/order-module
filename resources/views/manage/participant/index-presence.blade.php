@@ -60,7 +60,7 @@
             <th>Club Name</th>
             <th>Title</th>            
             <th>Phone Number</th>            
-            {{-- <th>Action</th> --}}
+            <th>Action</th>
         </tr>
         </thead>
         <tbody>   
@@ -72,9 +72,9 @@
             <td>{{ $pendaftar->club_name == "" || $pendaftar->club_name == null ? '-' : $pendaftar->club_name }}</td>
             <td>{{ $pendaftar->title ?? '-' }}</td>
             <td>{{ $pendaftar->phone_number ?? '-' }}</td>
-            {{-- <td align="center" class="d-flex justify-content-around" style="gap: 10px">
-                <button type="button" class="btn btn-info bold font-weight-bold" data-toggle="modal" data-target="#presence{{ $pendaftar->id }}">Confirm Presence</button>
-            </td> --}}
+            <td align="center" class="d-block justify-content-center">
+                <a href="/details/show/{{ $pendaftar->user->id }}" class="btn bg-primary btn-sm text-light bold mx-2">Lihat Detail</a>
+            </td>
         </tr>
 
         <div class="modal hide fade in" tabindex="-1" id="presence{{ $pendaftar->id }}" role="dialog">

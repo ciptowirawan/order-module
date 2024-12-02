@@ -4,6 +4,8 @@
 <form method="POST" action="/manage/admin/update/{{ $data->id }}">
     @method('PUT')
     @csrf
+
+    <h2 style="color: black">Edit Admin</h3>
     
     <div class="row mt-3 mb-3" style="color:black">
       <div class="col-md-6 mb-3">

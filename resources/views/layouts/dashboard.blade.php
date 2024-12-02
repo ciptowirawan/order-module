@@ -64,14 +64,14 @@
             </li>
 
             <!-- Divider -->
-            @role('admin')
+            @role('admin|admin-administrator')
             <hr class="sidebar-divider">
             <!-- Heading -->
             <div class="sidebar-heading">
                 User Managements
             </div>
 
-            <!-- Nav Item - Pages Collapse Menu -->
+            @role('admin-administrator')
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
@@ -86,6 +86,7 @@
                     </div>
                 </div>
             </li>
+            @endrole
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
@@ -335,17 +336,13 @@
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                {{-- <a class="dropdown-item" href="#">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
-                                </a>
-                                <a class="dropdown-item" href="#">
+                                </a> --}}
+                                <a class="dropdown-item" href="/dashboard/password/form">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Activity Log
+                                    Change Password
                                 </a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
@@ -375,7 +372,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2021</span>
+                        <span>Copyright &copy; Lions MD 307 2024</span>
                     </div>
                 </div>
             </footer>

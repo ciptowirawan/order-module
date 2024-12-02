@@ -39,16 +39,17 @@ class PermissionSeeder extends Seeder
         $role_admin->givePermissionTo('add');
         $role_admin->givePermissionTo('delete');
 
-        // Assign user to role
-        $admin = User::where(['id' => 1])->first();
-        // $user = User::where(['id' => 2])->first();
-        $admin->syncRoles([$role_admin]);
-        // $user->syncRoles([$role_user]);
+        $role_admin_administrator = Role::create(['name' => 'admin-administrator']);
+        $role_admin_administrator->givePermissionTo(Permission::all());
+
+        // Find the user with ID 1 and assign the new admin-administrator role
+        $adminAdministrator = User::where('id', 1)->first();
+        $adminAdministrator->syncRoles([$role_admin_administrator]);
 
         // Get Permissions by Role then assign user to permission
-        $permission_admin = $role_admin->permissions->pluck('name')->toArray();
+        $permission_admin_administrator = $role_admin_administrator->permissions->pluck('name')->toArray();
         $permission_user = $role_user->permissions->pluck('name')->toArray();
         // $user->syncPermissions($permission_user);
-        $admin->syncPermissions($permission_admin);
+        $adminAdministrator->syncPermissions($permission_admin_administrator);
     }
 }

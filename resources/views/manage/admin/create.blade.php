@@ -4,7 +4,7 @@
 <form method="POST" action="/manage/admin/store">    
     @csrf
 
-    <h2 style="color: black">Add New Admin</h3>
+    <h2 style="color: black">Tambahkan Admin</h3>
     
     <div class="row mt-3 mb-3" style="color:black">
       <div class="col-md-6 mb-3">
