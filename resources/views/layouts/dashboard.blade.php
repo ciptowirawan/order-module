@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>MD 307 Convention - Dashboard</title>
+    <title>Lions Clubs Multiple District 307 - Dashboard</title>
 
     {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> --}}
 
@@ -50,7 +50,7 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fa-solid fa-landmark-flag fa-xl"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">Convention <sup>MD 307</sup></div>
+                <div class="sidebar-brand-text mx-3">Lions Clubs <sup>MD 307</sup></div>
             </a>
 
             <!-- Divider -->

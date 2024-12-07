@@ -6,6 +6,7 @@ use Validator;
 use App\Models\User;
 use App\Models\Uuid;
 use App\Models\Pendaftaran;
+use App\Models\Registration;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use libphonenumber\PhoneNumberUtil;
@@ -147,5 +148,11 @@ class ParticipantController extends Controller
 
         return View('details.user-detail', compact('member', 'uuid'));
     }
+
+    public function showRegistrant(Registration $member) {
+
+        return View('details.registrant-detail', compact('member'));
+    }
+
 
 }

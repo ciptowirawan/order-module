@@ -17,19 +17,8 @@
                 class="rounded-circle img-fluid" style="width: 150px;">
             <h5 class="mt-3 bold" style="color: dimgray">{{ $member->full_name }}</h5>     
             <p class="text-muted mb-2 fs-6">Title : {{ $member->title ?? "-" }}</p>        
-            @if($member->status == 'PENDING')
-            <p class="badge bg-danger fs-6">"Inactive"</p>
-            @endif
-            @if ($member->member_over_in)
-            <p class="badge bg-success fs-6 mb-1"><b>Devotional Period: {{ date('Y', strtotime($member->member_activate_in)). " - " . date('Y', strtotime($member->member_over_in))}}</b></p> 
-            @endif
             </div>
         </div>
-        @if ($member->status == 'SUCCESS' && $uuid)
-            <div class="my-4">
-                @include('dashboard.name-tag-pdf')
-            </div>
-        @endif
         </div>
         
         <div class="col-lg-8 col-md-8 col-sm-12">
@@ -41,11 +30,6 @@
                 </div>
                 <div class="col-sm-8">
                     <p class="text-muted mb-0">{{ $member->email }}</p>
-                    {{-- @if ($member->user->email_verified_at == null)
-                    <p class="text-muted mb-0">{{ $member->user->email }} <span data-feather="alert-octagon" stroke="red" class="d-inline mx-3" alt="Alamat Email Belum di-verifikasi"></span></p>
-                    @else
-                    <p class="text-muted mb-0">{{ $member->user->email }} <span data-feather="user-check" stroke="green" class="d-inline mx-3" alt="Alamat Email Berhasil di-verifikasi"></span></p>
-                    @endif --}}
                 </div>
                 </div>
                 <hr>
@@ -99,19 +83,10 @@
                     <p class="mb-0">Alternate Phone Number</p>
                 </div>
                 <div class="col-sm-8">
-                    <p class="text-muted mb-0">{{ $member->alternate_phone_number }}</p>
+                    <p class="text-muted mb-0">{{ $member->alternate_phone_number ?? "-" }}</p>
                 </div>
                 </div>
                 <hr>
-                {{-- <div class="row">
-                <div class="col-sm-4">
-                    <p class="mb-0">Club Number</p>
-                </div>
-                <div class="col-sm-8">
-                    <p class="text-muted mb-0">{{ $member->club_number ?? '-' }}</p>
-                </div>
-                </div>
-                <hr> --}}
                 <div class="row">
                 <div class="col-sm-4">
                     <p class="mb-0">Club Name</p>
@@ -121,24 +96,6 @@
                 </div>
                 </div>
                 <hr>
-                {{-- <div class="row">
-                <div class="col-sm-4">
-                    <p class="mb-0">Emergency Contact</p>
-                </div>
-                <div class="col-sm-8">
-                    <p class="text-muted mb-0">{{ $member->emergency_contact }}</p>
-                </div>
-                </div>
-                <hr>
-                <div class="row">
-                <div class="col-sm-4">
-                    <p class="mb-0">Emergency Phone Number</p>
-                </div>
-                <div class="col-sm-8">
-                    <p class="text-muted mb-0">{{ $member->emergency_phone_number }}</p>
-                </div>
-                </div>
-                <hr> --}}
                 <div class="row">
                 <div class="col-sm-4">
                     <p class="mb-0">District</p>
@@ -148,15 +105,6 @@
                 </div>
                 </div>
                 <hr>
-                {{-- <div class="row">
-                <div class="col-sm-4">
-                    <p class="mb-0">Status Pembayaran</p>
-                </div>
-                <div class="col-sm-8">
-                    <p class="badge badge-{{$member->payment->status == 'paid' ? 'success' : 'danger'}}">{{ $member->payment->status }}</p>
-                </div>
-                </div>
-                <hr> --}}
                 <div class="row">
                 <div class="col-sm-4">
                     <p class="mb-0">Address 1</p>
@@ -174,46 +122,19 @@
                     <p class="text-muted mb-0">{{ $member->address_2 ?? '-' }}</p>
                 </div>
                 </div>
-                {{-- <hr>
-                <div class="row">
-                <div class="col-sm-4">
-                    <p class="mb-0">Amount</p>
-                </div>
-                <div class="col-sm-8">
-                    <p class="text-muted mb-0">{{ number_format($member->payment->amount,0) }}</p>
-                </div>
-                </div>
                 <hr>
                 <div class="row">
                 <div class="col-sm-4">
-                    <p class="mb-0">Payment Date</p>
+                    <p class="mb-0">Status Kehadiran</p>
                 </div>
                 <div class="col-sm-8">
-                    <p class="text-muted mb-0">{{$member->payment->payment_date ?? '-'}}</p>
+                    <p class="fs-5 mb-0">{!! is_null($member->status_kehadiran) ? '<span class="badge bg-danger">Belum Hadir</span>' : '<span class="badge bg-success">Hadir</span>' !!}</p>
                 </div>
                 </div>
-                <hr>
-                <div class="row">
-                <div class="col-sm-4">
-                    <p class="mb-0">Paid Amount</p>
-                </div>
-                <div class="col-sm-8">
-                    <p class="text-muted mb-0">{{$member->payment->paid_amount == null ? '-' : number_format($member->payment->paid_amount,0)}}</p>
-                </div>
-                </div> --}}
             </div>
             </div>
         </div>
     </div>
-
-    {{-- <div class="my-2" align="center">
-        @if($history > 0)
-        <a href="/details/modify/{{$member->id}}" class="btn btn-secondary font-weight-bold">See History</a>
-        @endif
-        <a href="/details/edit/{{$member->id}}" class="btn mx-2 btn-primary font-weight-bold">Modify</a>
-        <button type="button" class="btn btn-danger font-weight-bold" data-bs-toggle="modal" data-bs-target="#cancel{{ $member->user->id }}">Cancel Registration</button> 
-    </div> --}}
-
     <div class="modal hide fade in" tabindex="-1" id="cancel{{ $member->id }}" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">

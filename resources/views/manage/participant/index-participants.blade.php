@@ -97,7 +97,7 @@
             <td>{{ $pendaftar->title ?? '-'}}</td>
             <td><b class="badge bg-success text-light fs-6">{{ date('Y', strtotime($pendaftar->user->member_activate_in)). " - " . date('Y', strtotime($pendaftar->user->member_over_in))}}</b></td>
             <td align="center" class="d-block justify-content-center">
-                <a href="/details/show/{{ $pendaftar->user->id }}" class="btn bg-primary btn-sm text-light bold mx-2">Lihat Detail</a>
+                <a href="/details/showRegistrant/{{ $pendaftar->id }}" class="btn bg-primary btn-sm text-light bold mx-2">Lihat Detail</a>
             </td>
         </tr>
 

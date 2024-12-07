@@ -73,7 +73,7 @@
             <td>{{ $pendaftar->title ?? '-' }}</td>
             <td>{{ $pendaftar->phone_number ?? '-' }}</td>
             <td align="center" class="d-block justify-content-center">
-                <a href="/details/show/{{ $pendaftar->user->id }}" class="btn bg-primary btn-sm text-light bold mx-2">Lihat Detail</a>
+                <a href="/details/showRegistrant/{{ $pendaftar->id }}" class="btn bg-primary btn-sm text-light bold mx-2">Lihat Detail</a>
             </td>
         </tr>
 

@@ -25,6 +25,7 @@ class RegistrationApiController extends Controller
 
     public function __construct()
     {
+
         $this->client = new SimpleClient(config('enqueue.default'));
     }
 

@@ -54,7 +54,9 @@ class SyncPaymentData implements ShouldQueue
                 $url = url('/dashboard/presence/update?uuid=' . $uuid);
                 $qrCode = QrCode::format('png')->size(150)->generate($url);
                 $filename = 'qrcodes/' . $uuid . '.png';
-                Storage::put('public/' . $filename, $qrCode);
+                $qr = Storage::put('public/' . $filename, $qrCode);
+
+                Log::info('QR Code data synchronized: ' . $qr);
             } else {
                 // This is a renewal - they already have an activation date
                 $currentOverIn = Carbon::parse($user->member_over_in);       

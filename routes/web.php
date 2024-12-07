@@ -69,6 +69,7 @@ Route::prefix('/register')->group(function() {
 
 Route::prefix('/details')->group(function() {
     Route::get('/show/{member}', [ParticipantController::class, 'show'])->middleware('auth', 'is_admin');
+    Route::get('/showRegistrant/{member}', [ParticipantController::class, 'showRegistrant'])->middleware('auth', 'is_admin');
 });
 
 Route::prefix('/manage')->group(function() {

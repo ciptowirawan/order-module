@@ -111,7 +111,7 @@
                                         <h4>Address</h4>
                                     </div>
                                     <div class="col-md-12">
-                                        <label for="address_1" class="type-title">Address</label>
+                                        <label for="address_1" class="type-title"><span class="requiredcol">*</span> Address</label>
 
                                         <input id="address_1" type="text" class="form-control @error('address_1') is-invalid @enderror required-field" name="address_1" value="{{ old('address_1') }}" autocomplete="address_1">
                     
@@ -174,7 +174,7 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-6 ">
-                                        <label for="zip" class="type-title">ZIP/Postal Code</label>
+                                        <label for="zip" class="type-title"><span class="requiredcol">*</span> ZIP/Postal Code</label>
 
                                         <input id="zip" type="text" class="form-control @error('zip') is-invalid @enderror required-field" name="zip" value="{{ old('zip') }}" autocomplete="zip">
                     

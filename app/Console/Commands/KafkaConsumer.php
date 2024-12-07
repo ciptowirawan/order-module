@@ -27,13 +27,9 @@ class KafkaConsumer extends Command
         //         $this->info('Received message: ' . json_encode($message->getBody()));
         //     })->build();
 
-        $consumer = Kafka::createConsumer(['payment-success', 'payment-member-success'])
+        $consumer = Kafka::createConsumer(['payment-success'])
             ->withHandler(function (KafkaConsumerMessage $message) {
-                if ($message->getTopicName() === 'payment-success') {
-                    event(new PaymentDataReceived(json_encode($message->getBody())));
-                } elseif ($message->getTopicName() === 'payment-member-success') {
-                    event(new PaymentMemberReceived(json_encode($message->getBody())));
-                }
+                event(new PaymentDataReceived(json_encode($message->getBody())));
                 $this->info('Received message from ' . $message->getTopicName() . ': ' . json_encode($message->getBody()));
         })->build();
 

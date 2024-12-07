@@ -138,7 +138,7 @@ class PresenceController extends Controller
 
     public function checkPresence(Request $request)
     {
-        if (auth()->user()->hasRole(['admin'])) {
+        if (auth()->user()->hasRole(['admin', 'admin-administrator'])) {
             $uuidData = Uuid::where('uuid', $request->input('uuid'))->first();        
             // Get the current date and time
             $now = Carbon::now();
