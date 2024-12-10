@@ -13,11 +13,11 @@
     </div>
   @endif
     <div class="title-text">
-        <h6>49th MD 307 Lions Convention</h6>
+        <h6>{{ \Carbon\Carbon::parse($data->event_start_at)->format('M j') }}-{{ \Carbon\Carbon::parse($data->event_end_at)->format('j, Y') }}</h6>
         <hr class="small-hr">
 
-        <h1>Lions MD307 <br> Convention 2025 Indonesia</h1>
-        <p>The Lions International Convention is happening May 8-11, 2025. Celebrate service with your fellow <br> Lions and Leos in one of the most unique and exciting travel destinations in the world — beautiful Indonesia!</p>
+        <h1>Lions {{$data->event_name }} <br> Indonesia</h1>
+        <p>The Lions {{ $data->event_name }} is happening {{ \Carbon\Carbon::parse($data->event_start_at)->format('M j') }}-{{ \Carbon\Carbon::parse($data->event_end_at)->format('j, Y') }}. Celebrate service with your fellow <br> Lions and Leos in one of the most unique and exciting travel destinations in the world — beautiful Indonesia!</p>
     </div>
       @if ($registered)
       <button class="btn register-button" href="#">you are already registered, make sure to arrive on time!</button>  
@@ -76,14 +76,14 @@
     </div>
     <div class="row">
         <div class="col-md-8" style="line-height: 2;">
-            <p>Adventure awaits you in Indonesia as the city hosts thousands of Lions and Leos from all over the globe who come together at the premier event of the year. At our Lions International Convention, you’ll celebrate our commitment to serving our world with your fellow Lions and Leos, friends and make new ones.</p>
+            <p>Adventure awaits you in Indonesia as the city hosts thousands of Lions and Leos from all over the globe who come together at the premier event of the year. At our Lions {{ $data->event_name }}, you’ll celebrate our commitment to serving our world with your fellow Lions and Leos, friends and make new ones.</p>
             <p>Known as the cultural capital of Pontianak, Indonesia offers world-class restaurants and bars, exciting nightlife, eclectic festivals, legendary street art, unique shopping boutiques, incredible beaches and dazzling views, as well as some of the friendliest people you’ll ever meet.</p>
         </div>
         <div class="col-md-4">
             <div class="img-fluid card">
                 <div class="card-body">
                   <h5 class="card-title">When</h5>
-                  <p class="card-text">May 8-11, 2025</p>
+                  <p class="card-text">{{ \Carbon\Carbon::parse($data->event_start_at)->format('M j') }}-{{ \Carbon\Carbon::parse($data->event_end_at)->format('j, Y') }}</p>
                   <h5 class="card-title">Where</h5>
                   <p class="card-text">Pontianak, Indonesia</p>
                   @if ($registered)
@@ -100,7 +100,7 @@
     <img src="{{ asset('/storage/content-images/city.webp') }}"  width="90%"/>
 </div> --}}
 
-<div class="event-speakers">
+<!-- <div class="event-speakers">
     <div class="speakers-title" align="center">
         <h1>Event speakers</h1>
         <hr class="small-hr mt-3 mb-4">
@@ -123,7 +123,7 @@
             <h4 class="bold">First Vice President <br> Fabrício Oliveira</h4>
         </div>
     </div>
-</div>
+</div> -->
 
 <div class="excitement" align="center">
     <div class="row">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use Validator;
 use App\Models\User;
 use App\Models\Uuid;
+use App\Models\Event;
 use App\Models\Pendaftaran;
 use App\Models\Registration;
 use Illuminate\Http\Request;
@@ -38,6 +39,25 @@ class ParticipantController extends Controller
         ->paginate(20);
 
         return view('manage.participant.index-unpaid', compact('pendaftaran'));
+    }
+
+    public function index_event_participant() {
+        $events = Event::whereNotNull('registration_start_at')->get();
+        $purpose = "1";
+
+        return view('manage.participant.index-event', compact('events', 'purpose'));
+    }
+    public function index_event_hadir() {
+        $events = Event::whereNotNull('registration_start_at')->get();
+        $purpose = "3";
+
+        return view('manage.participant.index-event', compact('events', 'purpose'));
+    }
+    public function index_event_tidak_hadir() {
+        $events = Event::whereNotNull('registration_start_at')->get();
+        $purpose = "2";
+
+        return view('manage.participant.index-event', compact('events', 'purpose'));
     }
 
     public function index_paid(Request $request) {

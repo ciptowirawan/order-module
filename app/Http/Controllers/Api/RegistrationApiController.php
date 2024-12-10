@@ -18,6 +18,7 @@ use App\Http\Resources\PostResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Enqueue\SimpleClient\SimpleClient;
+use Illuminate\Auth\Events\Registered;
 
 class RegistrationApiController extends Controller
 {
@@ -108,6 +109,8 @@ class RegistrationApiController extends Controller
         } catch (Exception $e) {
             dd('Caught exception: ',  $e->getMessage(), "\n");
         }
+
+        event(new Registered($reguser));
         
         Auth::login($reguser);
 
@@ -259,6 +262,10 @@ class RegistrationApiController extends Controller
 
         $registeredData = User::where('id', auth()->user()->id)->first();
 
+        $event = Event::whereDate('registration_start_at', '<=', Carbon::today())
+        ->whereDate('registration_end_at', '>=', Carbon::today())
+        ->first(); 
+
         if ($registeredData->member_activate_in == null) {
             return response()->json(['error' => 'You Must be an active member to register as aparticipant in this event.'], 401);
         }
@@ -283,7 +290,8 @@ class RegistrationApiController extends Controller
             'district' => $registeredData->district,
             'terms' => $registeredData->terms,
             'conditions' => $registeredData->conditions,
-            'registrant_tag' => $registeredData->registrant_tag
+            'registrant_tag' => $registeredData->registrant_tag,
+            'event_id' => $event->id
         ]);
 
         return response()->json(['message' => 'User registered successfully']);

@@ -265,9 +265,6 @@
     <div class="event-content">
         @yield('content')
     </div>
-    <div class="mt-3 mb-1" style="width: 100%; max-width: 1080px; margin: 0 auto;" align="center">
-        <h1>MD-307 Convention</h1>
-    </div>
     
     <div class="top-banner text-light">
         <h3>May 8-11, 2025</h3>

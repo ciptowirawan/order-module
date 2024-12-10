@@ -15,12 +15,22 @@
             padding: 8px;
             text-align: left;
         }
+        h1 {
+            margin-bottom: 0;
+            text-align: center;
+        }
+        p {
+            margin-top: 0;
+            text-align:center;
+        }
     </style>
 </head>
 <body>
-    <h1>Inactive Members Report</h1>
-    <h2>District with Most Inactive Members: {{ $districtWithMostInactive ?? '-' }} ({{ $mostInactiveDistrictCount ?? 0 }} members)</h2>
-    <h2>District with Least Inactive Members: {{ $districtWithLeastInactive ?? '-' }} ({{ $leastInactiveDistrictCount ?? 0 }} members)</h2>
+    <h1>Lions Clubs Multiple District 307</h1>
+    <p>Gedung PPMLI Jl. Pluit Timur Raya Kavling B2, RT.10/RW.9, Pluit, Kec. Penjaringan, Jkt Utara, Daerah Khusus Ibukota Jakarta 14450</p>
+    <h2>Inactive Members Report</h2>
+    <h3>District with Most Inactive Members: {{ $districtWithMostInactive ?? '-' }} ({{ $mostInactiveDistrictCount ?? 0 }} members)</h3>
+    <h3>District with Least Inactive Members: {{ $districtWithLeastInactive ?? '-' }} ({{ $leastInactiveDistrictCount ?? 0 }} members)</h3>
     <table>
         <thead>
             <tr>

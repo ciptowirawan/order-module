@@ -68,7 +68,7 @@
             <hr class="sidebar-divider">
             <!-- Heading -->
             <div class="sidebar-heading">
-                User Managements
+                Managements
             </div>
 
             @role('admin-administrator')
@@ -89,6 +89,21 @@
             @endrole
 
             <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEvent"
+                    aria-expanded="true" aria-controls="collapseEvent">
+                    <i class="fa-brands fa-elementor"></i>
+                    <span>Events</span>
+                </a>
+                <div id="collapseEvent" class="collapse" aria-labelledby="headingthree" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Manage Events: </h6>
+                        <a class="collapse-item" href="/manage/events">Manage Events</a>
+                        <a class="collapse-item" href="/manage/events/create">Add New Events</a>
+                    </div>
+                </div>
+            </li>
+
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree"
                     aria-expanded="true" aria-controls="collapseThree">
@@ -113,9 +128,9 @@
                 <div id="collapseNine" class="collapse" aria-labelledby="headingNine" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Manage Participants: </h6>
-                        <a class="collapse-item" href="/dashboard/participants">Daftar Peserta Kegiatan</a>
-                        <a class="collapse-item" href="/dashboard/presence-unattended">Daftar Peserta Belum Hadir</a>
-                        <a class="collapse-item" href="/dashboard/presence-attended">Daftar Peserta Hadir</a>
+                        <a class="collapse-item" href="/dashboard/event-participant">Daftar Peserta Kegiatan</a>
+                        <a class="collapse-item" href="/dashboard/event-unattended">Daftar Peserta Belum Hadir</a>
+                        <a class="collapse-item" href="/dashboard/event-attended">Daftar Peserta Hadir</a>
                     </div>
                 </div>
             </li>

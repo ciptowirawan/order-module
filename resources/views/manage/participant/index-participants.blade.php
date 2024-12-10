@@ -15,7 +15,7 @@
 
 <h1 class="h3 mb-2 text-gray-800">Event Participants</h1>
 
-<form action="/dashboard/participants" method="get" class="d-sm-inline-block form-inline mr-auto ml-md-12 my-2 my-md-0 w-100">
+<form action="/dashboard/participants/event/{{$id}}" method="get" class="d-sm-inline-block form-inline mr-auto ml-md-12 my-2 my-md-0 w-100">
     <div class="input-group">
         <input type="text" class="form-control bg-light border-1 small" placeholder="Cari Peserta..."
         name="search" aria-label="Search" aria-describedby="basic-addon2" value="{{ request('search') }}">
@@ -34,20 +34,22 @@
             <b>Export as Pdf By District</b>&nbsp;<i class="fa-solid fa-file-pdf"></i>
         </button>
         <div class="dropdown-menu dropdown-menu-start">
-            <a class="dropdown-item" href="{{ route('export-participants-pdf-by-district', 'MD307-A1') }}">MD307-A1</a>
+            <a class="dropdown-item" href="{{ route('export-participants-pdf', $id) }}">All District</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{{ route('export-participants-pdf-by-district', 'MD307-A2') }}">MD307-A2</a>
+            <a class="dropdown-item" href="{{ route('export-participants-pdf-by-district',['district' => 'MD307-A1', 'data' => $id]) }}">MD307-A1</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{{ route('export-participants-pdf-by-district', 'MD307-B1') }}">MD307-B1</a>
+            <a class="dropdown-item" href="{{ route('export-participants-pdf-by-district',['district' => 'MD307-A2', 'data' => $id]) }}">MD307-A2</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{{ route('export-participants-pdf-by-district', 'MD307-B2') }}">MD307-B2</a>
+            <a class="dropdown-item" href="{{ route('export-participants-pdf-by-district',['district' => 'MD307-B1', 'data' => $id]) }}">MD307-B1</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{{ route('export-participants-pdf-by-district',['district' => 'MD307-B2', 'data' => $id]) }}">MD307-B2</a>
         </div>
     </div>
     </div>
 
     <div class="d-flex justify-content-end mr-1">
         @if (request()->route('district'))
-            <a href="/dashboard/presence-attended" class="btn btn-danger mr-2">
+            <a href="/dashboard/participants/event/{{$id}}" class="btn btn-danger mr-2">
                 Cancel Sorting
             </a>
         @endif
@@ -56,13 +58,13 @@
                 Sort By District
             </button>
             <div class="dropdown-menu dropdown-menu-right">
-                <a class="dropdown-item" href="{{ route('sort-participants-by-district', 'MD307-A1') }}">MD307-A1</a>
+                <a class="dropdown-item" href="{{ route('sort-participants-by-district', ['district' => 'MD307-A1', 'id' => $id]) }}">MD307-A1</a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{{ route('sort-participants-by-district', 'MD307-A2') }}">MD307-A2</a>
+                <a class="dropdown-item" href="{{ route('sort-participants-by-district', ['district' => 'MD307-A2', 'id' => $id]) }}">MD307-A2</a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{{ route('sort-participants-by-district', 'MD307-B1') }}">MD307-B1</a>
+                <a class="dropdown-item" href="{{ route('sort-participants-by-district', ['district' => 'MD307-B1', 'id' => $id]) }}">MD307-B1</a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{{ route('sort-participants-by-district', 'MD307-B2') }}">MD307-B2</a>
+                <a class="dropdown-item" href="{{ route('sort-participants-by-district', ['district' => 'MD307-B2', 'id' => $id]) }}">MD307-B2</a>
             </div>
           </div>
     </div>

@@ -15,7 +15,7 @@
 
 <h1 class="h3 mb-2 text-gray-800">Presence <span class="badge badge-success">Hadir</span></h1>
 
-<form action="/dashboard/presence-attended" method="get" class="d-sm-inline-block form-inline mr-auto ml-md-12 my-2 my-md-0 w-100">
+<form action="/dashboard/presence-attended/event/{{$id}}" method="get" class="d-sm-inline-block form-inline mr-auto ml-md-12 my-2 my-md-0 w-100">
     <div class="input-group">
         <input type="text" class="form-control bg-light border-1 small" placeholder="Cari Peserta..."
         name="search" aria-label="Search" aria-describedby="basic-addon2" value="{{ request('search') }}">
@@ -31,38 +31,45 @@
     <div class="d-flex justify-content-start">
     <div class="dropdown">
         <button class="btn btn-danger dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
-            <b>Export as Pdf By District</b>&nbsp;<i class="fa-solid fa-file-pdf"></i>
+            <b>Export as Pdf By Date</b>&nbsp;<i class="fa-solid fa-file-pdf"></i>
         </button>
         <div class="dropdown-menu dropdown-menu-start">
-            <a class="dropdown-item" href="{{ route('export-attended-pdf-by-district', 'MD307-A1') }}">MD307-A1</a>
+            @foreach($distinctDates as $date)
+                <a class="dropdown-item" href="{{ route('export-attended-pdf-by-date', ['checkInDate' => $date, 'data' => $id]) }}">{{ \Carbon\Carbon::parse($date)->format('d F Y') }}</a>
+            @if(!$loop->last)
+                <div class="dropdown-divider"></div>
+            @endif
+            @endforeach
+            <!-- <a class="dropdown-item" href="/dashboard/export-pdf-attended-all/event/{{$id}}">All District</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{{ route('export-attended-pdf-by-district', 'MD307-A2') }}">MD307-A2</a>
+            <a class="dropdown-item" href="{{ route('export-attended-pdf-by-district', ['district' => 'MD307-A1', 'data' => $id]) }}">MD307-A1</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{{ route('export-attended-pdf-by-district', 'MD307-B1') }}">MD307-B1</a>
+            <a class="dropdown-item" href="{{ route('export-attended-pdf-by-district', ['district' => 'MD307-A2', 'data' => $id]) }}">MD307-A2</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{{ route('export-attended-pdf-by-district', 'MD307-B2') }}">MD307-B2</a>
+            <a class="dropdown-item" href="{{ route('export-attended-pdf-by-district', ['district' => 'MD307-B1', 'data' => $id]) }}">MD307-B1</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{{ route('export-attended-pdf-by-district', ['district' => 'MD307-B2', 'data' => $id]) }}">MD307-B2</a> -->
         </div>
     </div>
     </div>
 
     <div class="d-flex justify-content-end mr-1">
-        @if (request()->route('district'))
-            <a href="/dashboard/presence-attended" class="btn btn-danger mr-2">
+        @if (request()->route('checkInDate'))
+            <a href="/dashboard/presence-attended/event/{{$id}}" class="btn btn-danger mr-2">
                 Cancel Sorting
             </a>
         @endif
         <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
-                Sort By District
+                Sort By Date
             </button>
             <div class="dropdown-menu dropdown-menu-right">
-                <a class="dropdown-item" href="{{ route('sort-attended-by-district', 'MD307-A1') }}">MD307-A1</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{{ route('sort-attended-by-district', 'MD307-A2') }}">MD307-A2</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{{ route('sort-attended-by-district', 'MD307-B1') }}">MD307-B1</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{{ route('sort-attended-by-district', 'MD307-B2') }}">MD307-B2</a>
+                @foreach($distinctDates as $date)
+                    <a class="dropdown-item" href="{{ route('sort-attended-by-date', ['checkInDate' => $date, 'id' => $id]) }}">{{ \Carbon\Carbon::parse($date)->format('d F Y') }}</a>
+                @if(!$loop->last)
+                    <div class="dropdown-divider"></div>
+                @endif
+                @endforeach
             </div>
           </div>
     </div>
@@ -84,7 +91,7 @@
             <th>Club Name</th>
             <th>Title</th>            
             <th>Checked In On</th>
-            <th>Checked In By</th>
+            <!-- <th>Checked In By</th> -->
         </tr>
         </thead>
         <tbody>   
@@ -95,8 +102,12 @@
             <td>{{ $pendaftar->full_name }}</td>
             <td>{{ $pendaftar->club_name == "" || $pendaftar->club_name == null ? '-' : $pendaftar->club_name }}</td>
             <td>{{ $pendaftar->title ?? '-' }}</td>
-            <td>{{ $pendaftar->updated_at ?? '-' }}</td>
-            <td>{{ $pendaftar->admin->full_name ?? '-' }}</td>
+            <td><ul>
+                @foreach ($pendaftar->presences as $presence)
+                    <li>{{ $presence->waktu_hadir }}</li>
+                @endforeach
+            </ul></td>
+            <!-- <td>{{ $pendaftar->admin->full_name ?? '-' }}</td> -->
             {{-- <td align="center" class="d-flex justify-content-around" style="gap: 10px">
                 <button type="button" class="btn btn-info bold font-weight-bold" data-toggle="modal" data-target="#presence{{ $pendaftar->id }}">Confirm Presence</button>
             </td> --}}

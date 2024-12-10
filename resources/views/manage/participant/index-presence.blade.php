@@ -15,7 +15,7 @@
 
 <h1 class="h3 mb-2 text-gray-800">Presence <span class="badge badge-danger">Belum Hadir</span></h1>
 
-<form action="/dashboard/presence-unattended" method="get" class="d-sm-inline-block form-inline mr-auto ml-md-12 my-2 my-md-0 w-100">
+<form action="/dashboard/presence-unattended/event/{{$id}}" method="get" class="d-sm-inline-block form-inline mr-auto ml-md-12 my-2 my-md-0 w-100">
     <div class="input-group">
         <input type="text" class="form-control bg-light border-1 small" placeholder="Cari Peserta..."
         name="search" aria-label="Search" aria-describedby="basic-addon2" value="{{ request('search') }}">
@@ -27,21 +27,50 @@
     </div>
 </form>
 
-<div class="row mx-1 my-3">
+<div class="row justify-content-between mx-1 my-3">
 <div class="dropdown">
     <button class="btn btn-danger dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
-        <b>Export as Pdf By District</b>&nbsp;<i class="fa-solid fa-file-pdf"></i>
+        <b>Export as Pdf By Dates</b>&nbsp;<i class="fa-solid fa-file-pdf"></i>
     </button>
     <div class="dropdown-menu dropdown-menu-start">
-        <a class="dropdown-item" href="{{ route('export-unattended-pdf-by-district', 'MD307-A1') }}">MD307-A1</a>
+        <!-- <a class="dropdown-item" href="{{ route('export-unattended-pdf', $id) }}">All District</a>
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="{{ route('export-unattended-pdf-by-district', 'MD307-A2') }}">MD307-A2</a>
+        <a class="dropdown-item" href="{{ route('export-unattended-pdf-by-district', ['district' => 'MD307-A1', 'data' => $id]) }}">MD307-A1</a>
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="{{ route('export-unattended-pdf-by-district', 'MD307-B1') }}">MD307-B1</a>
+        <a class="dropdown-item" href="{{ route('export-unattended-pdf-by-district', ['district' => 'MD307-A2', 'data' => $id]) }}">MD307-A2</a>
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="{{ route('export-unattended-pdf-by-district', 'MD307-B2') }}">MD307-B2</a>
+        <a class="dropdown-item" href="{{ route('export-unattended-pdf-by-district', ['district' => 'MD307-B1', 'data' => $id]) }}">MD307-B1</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="{{ route('export-unattended-pdf-by-district', ['district' => 'MD307-B2', 'data' => $id]) }}">MD307-B2</a> -->
+        @foreach($distinctDates as $date)
+            <a class="dropdown-item" href="{{ route('export-unattended-pdf-by-date', ['checkInDate' => $date, 'data' => $id]) }}">{{ \Carbon\Carbon::parse($date)->format('d F Y') }}</a>
+        @if(!$loop->last)
+            <div class="dropdown-divider"></div>
+        @endif
+        @endforeach
     </div>
   </div>
+
+  <div class="d-flex justify-content-end mr-1">
+        @if (request()->route('checkInDate'))
+            <a href="/dashboard/presence-unattended/event/{{$id}}" class="btn btn-danger mr-2">
+                Cancel Sorting
+            </a>
+        @endif
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                Sort By Date
+            </button>
+            <div class="dropdown-menu dropdown-menu-right">
+                @foreach($distinctDates as $date)
+                    <a class="dropdown-item" href="{{ route('sort-unattended-date', ['checkInDate' => $date, 'id' => $id]) }}">{{ \Carbon\Carbon::parse($date)->format('d F Y') }}</a>
+                @if(!$loop->last)
+                    <div class="dropdown-divider"></div>
+                @endif
+                @endforeach
+            </div>
+          </div>
+    </div>
 </div>
 
 {{-- <div class="d-flex justify-content-end my-3">
@@ -58,7 +87,8 @@
             <th>District</th>
             <th>Full Name</th>
             <th>Club Name</th>
-            <th>Title</th>            
+            <th>Title</th>         
+            <th>List of Missing Presence</th>   
             <th>Phone Number</th>            
             <th>Action</th>
         </tr>
@@ -71,6 +101,19 @@
             <td>{{ $pendaftar->full_name }}</td>
             <td>{{ $pendaftar->club_name == "" || $pendaftar->club_name == null ? '-' : $pendaftar->club_name }}</td>
             <td>{{ $pendaftar->title ?? '-' }}</td>
+            <td>
+                <ul>
+                    @if($pendaftar->missedDates && $pendaftar->missedDates->isNotEmpty())
+                        @foreach($pendaftar->missedDates as $missedDate)
+                        <li>
+                        {{ $missedDate }}
+                        </li>
+                        @endforeach
+                    @else
+                        -
+                    @endif
+                </ul>
+            </td>
             <td>{{ $pendaftar->phone_number ?? '-' }}</td>
             <td align="center" class="d-block justify-content-center">
                 <a href="/details/showRegistrant/{{ $pendaftar->id }}" class="btn bg-primary btn-sm text-light bold mx-2">Lihat Detail</a>

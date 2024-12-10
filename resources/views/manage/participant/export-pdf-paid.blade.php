@@ -15,10 +15,20 @@
             padding: 8px;
             text-align: left;
         }
+        h1 {
+            margin-bottom: 0;
+            text-align: center;
+        }
+        p {
+            margin-top: 0;
+            text-align:center;
+        }
     </style>
 </head>
 <body>
-    <h1>Active Members Report for {{$district}} District</h1>
+    <h1>Lions Clubs Multiple District 307</h1>
+    <p>Gedung PPMLI Jl. Pluit Timur Raya Kavling B2, RT.10/RW.9, Pluit, Kec. Penjaringan, Jkt Utara, Daerah Khusus Ibukota Jakarta 14450</p>
+    <h2>Active Members Report for {{$district}} District</h2>
     <table>
         <thead>
             <tr>
