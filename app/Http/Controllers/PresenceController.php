@@ -438,6 +438,8 @@ class PresenceController extends Controller
 
     public function checkPresence(Request $request)
     {
+
+        $now = Carbon::now();
         if (auth()->user()->hasRole(['admin', 'admin-administrator'])) {
             $uuidData = Uuid::where('uuid', $request->input('uuid'))->first();        
             // Get the current date and time
@@ -446,23 +448,18 @@ class PresenceController extends Controller
             ->whereDate('event_end_at', '>=', Carbon::today())
             ->first();
 
-            $registrant = Registration::where('event_id', $event->id)->where('user_id', $uuidData->user_id)->first();
-            if ($registrant === null) {
-                return response()->json(['error' => 'This member has not registered on this event yet.'], 400);
-            }
-
             if ($event === null) {
                 // If no such event exists, return an error
                 return response()->json(['error' => 'The event has not started yet.'], 404);
             }
+
+            $registrant = Registration::where('event_id', $event->id)->where('user_id', $uuidData->user_id)->first();
+            if ($registrant === null) {
+                return response()->json(['error' => 'This member has not registered on this event yet.'], 400);
+            }
         
             // Check if the current date and time is the same or after the valid_on date
             if ($now->greaterThanOrEqualTo(Carbon::parse($uuidData->valid_on))) {
-                // Update the presence status
-                    // $registrant->update([
-                    //     "status_kehadiran" => "HADIR",
-                    //     "updated_by" => auth()->user()->id
-                    // ]);
                     Presence::create([
                         "event_id" => $event->id,
                         "registrant_id" => $registrant->id,

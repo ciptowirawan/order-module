@@ -27,7 +27,7 @@
 </head>
 <body>
     <h1>Lions Clubs Multiple District 307</h1>
-    <p>Gedung PPMLI Jl. Pluit Timur Raya Kavling B2, RT.10/RW.9, Pluit, Kec. Penjaringan, Jkt Utara, Daerah Khusus Ibukota Jakarta 14450</p>
+    <p>Jalan Mujahidin No. 12 Kec. Pontianak Selatan 78121<br>Pontianak, Kalimantan Barat</p>
     <h2>Inactive Members Report</h2>
     <h3>District with Most Inactive Members: {{ $districtWithMostInactive ?? '-' }} ({{ $mostInactiveDistrictCount ?? 0 }} members)</h3>
     <h3>District with Least Inactive Members: {{ $districtWithLeastInactive ?? '-' }} ({{ $leastInactiveDistrictCount ?? 0 }} members)</h3>
@@ -55,5 +55,6 @@
             @endforeach
         </tbody>
     </table>
+    <p style="text-align: center; margin-top: 20px;">Exported By: {{ Auth::user()->full_name }}  on <?php echo date('Y-m-d h:i:s'); ?></p>
 </body>
 </html>

@@ -51,9 +51,6 @@ class DashboardController extends Controller
             $CP = $registrations->where('title', 'Club President')->count();
             $CS = $registrations->where('title', 'Club Secretary')->count();
             $unknownTitle = $registrations->where('title', null)->count();
-            // $Lion = $registrations->where('registration_type', 'Lion')->count();
-            // $Leo = $registrations->where('registration_type', 'Leo')->count();
-            // $Adult = $registrations->where('registration_type', 'Adult Guest')->count();
 
             $A1 = $paidRegistrants->where('district', 'MD307-A1')->count();
             $A2 = $paidRegistrants->where('district', 'MD307-A2')->count();
@@ -76,12 +73,8 @@ class DashboardController extends Controller
             $CP_percent = $totalRegistrants == 0 ? 0 : ($CP / $totalRegistrants) * 100;
             $CS_percent = $totalRegistrants == 0 ? 0 : ($CC / $totalRegistrants) * 100;
             $Unknown_percent = $totalRegistrants == 0 ? 0 : ($unknownTitle / $totalRegistrants) * 100;
-            // $Lion_percent = $totalRegistrants == 0 ? 0 : ($Lion / $totalRegistrants) * 100;
-            // $Leo_percent = $totalRegistrants == 0 ? 0 : ($Leo / $totalRegistrants) * 100;
-            // $Adult_percent = $totalRegistrants == 0 ? 0 : ($Adult / $totalRegistrants) * 100;
 
             return View('dashboard.index-admin', compact('totalRegistrants', 'totalPaidRegistrants', 'totalUnpaidRegistrants', 'totalNotIdentifiedRegistrants', 'registrationsByMonth', 'CC_percent', 'DG_percent', 'PCC_percent', 'PDG_percent', 'RC_percent', 'ZC_percent', 'CP_percent', 'CS_percent', 'Unknown_percent', 'A1', 'A2', 'B1', 'B2', 'Others', 'A1_percent', 'A2_percent', 'B1_percent', 'B2_percent', 'Others_percent', 'CC', 'DG', 'PCC', 'PDG', 'RC', 'ZC', 'CP', 'CS', 'unknownTitle'
-            // 'Lion_percent', 'Leo_percent', 'Adult_percent'
             ));
         }
         if (auth()->user()->hasRole('user')) {
@@ -91,31 +84,9 @@ class DashboardController extends Controller
             $uuid = Uuid::where('user_id', auth()->user()->id)->first();
 
             $amount = Order::where('user_id', auth()->user()->id)->where('status', 'PENDING')->value('amount');
-    
-            // $historicalData = json_decode($pendaftaran->historical_data, true);
-
-            // $history = 0;
-            
-            // if ($historicalData !== null) {
-            //     foreach ($historicalData as $index => $subArray) {
-            //         $history = count($subArray);
-            //     } 
-            // }
 
             return View('dashboard.index-group', compact('member', 'uuid','amount'));
-        //     $pendaftar = Pendaftaran::where('user_id',auth()->user()->id)->with('payment')->first();
-        //     if ($pendaftar->payment->status == 'unpaid') {
-        //         return View('dashboard.payment', compact('pendaftar'));
-        //     } else {
-        //         return View('dashboard.index', compact('pendaftar'));
-        //         $pendaftaran = Pendaftaran::where('user_id', $id)->with('user')->with('payment')->first();
         
-        //         $historicalData = json_decode($pendaftaran->historical_data, true);
-                
-        //         foreach ($historicalData as $index => $subArray) {
-        //             $history = count($subArray);
-        // } 
-        //     }
         }
     }
 

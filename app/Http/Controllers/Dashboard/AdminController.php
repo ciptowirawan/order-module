@@ -45,7 +45,7 @@ class AdminController extends Controller
         }
 
         $reguser = User::create([
-            'full_name' => $request->full_name,
+            'full_name' => strtoupper($request->full_name),
             'email' =>  $request->email,
             'password' => Hash::make($request->password)
         ]);
@@ -70,7 +70,7 @@ class AdminController extends Controller
 
         User::where('id', $id)
             ->update([
-                'full_name' => $validated['full_name'],
+                'full_name' => strtoupper($validated['full_name']),
                 'email' => $validated['email']
             ]);
 

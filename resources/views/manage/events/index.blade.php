@@ -49,10 +49,10 @@
         <tr align="center">
             <td>{{ $loop->iteration }}</td>
             <td>{{ $event->event_name }}</td>
-            <td>{{ \Carbon\Carbon::parse($event->registration_start_at)->format('d-m-Y') }}</td>
-            <td>{{ \Carbon\Carbon::parse($event->registration_end_at)->format('d-m-Y') }}</td>
-            <td>{{ \Carbon\Carbon::parse($event->event_start_at)->format('d-m-Y') }}</td>    
-            <td>{{ \Carbon\Carbon::parse($event->event_end_at)->format('d-m-Y') }}</td>    
+            <td>{{ $event->registration_start_at }}</td>
+            <td>{{ $event->registration_end_at }}</td>
+            <td>{{ $event->event_start_at }}</td>    
+            <td>{{ $event->event_end_at }}</td>    
             <td align="center" class="d-block justify-content-center">
                 <div class="d-flex justify-content-left mb-2">
                     <a href="/manage/events/edit/{{ $event->id }}" class="btn btn-warning mx-1"><b>Edit</b></a>

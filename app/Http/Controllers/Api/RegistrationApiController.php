@@ -31,7 +31,8 @@ class RegistrationApiController extends Controller
     }
 
     public function store(Request $request) {
-        $tarif = Event::where('event_name', 'membership')->value('amount');
+        // $tarif = Event::where('event_name', 'membership')->value('amount');
+        $tarif = 1500000;
         $virtualAccount = '8888' . $this->generateVirtualAccountNumber();
 
         $validator = Validator::make($request->all(), [
@@ -75,8 +76,6 @@ class RegistrationApiController extends Controller
             'phone_number' => $request->phone_code . $request->phone_number,
             'alternate_phone_number' => $request->alternate_phone_number ? $request->alternate_phone_code . $request->alternate_phone_number : null,            
             'club_name' => strtoupper($request->club_name),
-            // 'emergency_contact' => strtoupper($request->emergency_contact),
-            // 'emergency_phone_number' => $request->emergency_phone_code . $request->emergency_phone_number,
             'district' => $request->district,
             'registrant_tag' => 'REGULAR'
         ]);       
@@ -285,11 +284,7 @@ class RegistrationApiController extends Controller
             'alternate_phone_number' => $registeredData->alternate_phone_number ? $request->alternate_phone_code . $request->alternate_phone_number : null,            
             'club_number' => $registeredData->club_number,
             'club_name' => strtoupper($registeredData->club_name),
-            'emergency_contact' => strtoupper($registeredData->emergency_contact),
-            'emergency_phone_number' => $registeredData->emergency_phone_code . $registeredData->emergency_phone_number,
             'district' => $registeredData->district,
-            'terms' => $registeredData->terms,
-            'conditions' => $registeredData->conditions,
             'registrant_tag' => $registeredData->registrant_tag,
             'event_id' => $event->id
         ]);

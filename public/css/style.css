@@ -387,3 +387,7 @@ form[method=post] input[type=text] {
 .ticket-suggestions .col-md-2 {
     text-align: center;
 }
+
+th, td, input {
+    color: black;
+}

@@ -48,7 +48,7 @@
             <th>Full Name</th>
             <th>Club Name</th>
             <th>Title</th>
-            <th>Amount</th>
+            <th>Devotional Period</th>
             <th>Action</th>
         </tr>
         </thead>
@@ -60,7 +60,14 @@
             <td>{{ $pendaftar->full_name }}</td>
             <td>{{ $pendaftar->club_name == "" || $pendaftar->club_name == null ? '-' : $pendaftar->club_name }}</td>
             <td>{{ $pendaftar->title ?? '-' }}</td>
-            <td>{{ number_format($pendaftar->amount, 2) ?? '-' }}</td>
+            <td>
+                @if($pendaftar->member_activate_in)
+                <b class="badge bg-success text-light fs-6">{{ date('Y', strtotime($pendaftar->member_activate_in)). " - " . date('Y', strtotime($pendaftar->member_over_in))}}</b></td>   
+                @else
+                -         
+                @endif
+            <!-- <td>{{ number_format($pendaftar->amount ?? 1500000, 2)}}</td> -->
+
             <td align="center" class="d-flex justify-content-around" style="gap: 10px">
                 <a href="/details/show/{{ $pendaftar->id }}" class="font-weight-bold btn btn-primary btn-sm" > Lihat Detail</a>
             </td>

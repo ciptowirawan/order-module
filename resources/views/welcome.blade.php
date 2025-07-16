@@ -16,20 +16,32 @@
         <h6>{{ \Carbon\Carbon::parse($data->event_start_at)->format('M j') }}-{{ \Carbon\Carbon::parse($data->event_end_at)->format('j, Y') }}</h6>
         <hr class="small-hr">
 
-        <h1>Lions {{$data->event_name }} <br> Indonesia</h1>
-        <p>The Lions {{ $data->event_name }} is happening {{ \Carbon\Carbon::parse($data->event_start_at)->format('M j') }}-{{ \Carbon\Carbon::parse($data->event_end_at)->format('j, Y') }}. Celebrate service with your fellow <br> Lions and Leos in one of the most unique and exciting travel destinations in the world — beautiful Indonesia!</p>
+        <h1>Lions {{$data->event_name ?? "" }} <br> Indonesia</h1>
+        <p>The Lions {{ $data->event_name ?? ""}} is happening 
+          
+        @if ($data)
+            {{-- If $data exists, format its actual start and end dates --}}
+            {{ \Carbon\Carbon::parse($data->event_start_at)->format('M j') }}-{{ \Carbon\Carbon::parse($data->event_end_at)->format('j, Y') }}.
+        @else
+            {{-- If $data does not exist, display today's date range --}}
+            {{ \Carbon\Carbon::today()->format('M j') }}-{{ \Carbon\Carbon::today()->format('j, Y') }}.
+        @endif
+          
+          Celebrate service with your fellow <br> Lions and Leos in one of the most unique and exciting travel destinations in the world — beautiful Indonesia!</p>
     </div>
       @if ($registered)
       <button class="btn register-button" href="#">you are already registered, make sure to arrive on time!</button>  
       @else
 
-      @auth
-      <button class="btn register-button" onclick="confirmRegistration()">Register Now</button>
-          @else
-      <a href="{{ route('login') }}">
-        <button class="btn register-button">Register Now</button>
-      </a>
-      @endauth
+      @if ($registrationActive)
+        @auth
+          <button class="btn register-button" onclick="confirmRegistration()">Register Now</button>
+              @else
+          <a href="{{ route('login') }}">
+            <button class="btn register-button">Register Now</button>
+          </a>
+        @endauth
+      @endif
       @endif
 </div>
 
@@ -76,7 +88,7 @@
     </div>
     <div class="row">
         <div class="col-md-8" style="line-height: 2;">
-            <p>Adventure awaits you in Indonesia as the city hosts thousands of Lions and Leos from all over the globe who come together at the premier event of the year. At our Lions {{ $data->event_name }}, you’ll celebrate our commitment to serving our world with your fellow Lions and Leos, friends and make new ones.</p>
+            <p>Adventure awaits you in Indonesia as the city hosts thousands of Lions and Leos from all over the globe who come together at the premier event of the year. At our Lions {{ $data->event_name ?? "" }}, you’ll celebrate our commitment to serving our world with your fellow Lions and Leos, friends and make new ones.</p>
             <p>Known as the cultural capital of Pontianak, Indonesia offers world-class restaurants and bars, exciting nightlife, eclectic festivals, legendary street art, unique shopping boutiques, incredible beaches and dazzling views, as well as some of the friendliest people you’ll ever meet.</p>
         </div>
         <div class="col-md-4">
@@ -89,7 +101,9 @@
                   @if ($registered)
                     <button class="btn register-button" href="#">you are already registered!</button>  
                   @else
-                    <button class="btn register-button" onclick="confirmRegistration()">Register Now</button>
+                    @if ($registrationActive)
+                      <button class="btn register-button"   onclick="confirmRegistration()">Register Now</button>
+                    @endif
                   @endif
                 </div>
               </div>

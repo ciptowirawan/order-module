@@ -37,9 +37,17 @@ Route::get('/', function () {
 
     $data = Event::whereDate('registration_start_at', '<=', Carbon::today())
     ->whereDate('registration_end_at', '>=', Carbon::today())
-    ->first();    
+    ->first();
 
-    return view('welcome', compact('registered', 'data'));
+    $registrationActive = true;
+
+    if (!$data) {
+        $data = Event::latest('registration_end_at')->first(); // Or 'created_at', or 'registration_start_at' depending on what 'latest' means for you
+
+        $registrationActive = false;
+    }
+
+    return view('welcome', compact('registered', 'data', 'registrationActive'));
 });
 
 // Route::get('/register/information/ticketed-events', function () {
@@ -103,7 +111,7 @@ Route::prefix('/manage')->group(function() {
 });
 
 Route::prefix('/dashboard')->group(function() {
-    Route::get('/', [DashboardController::class, 'index'])->middleware('is_active_member', 'verified');     
+    Route::get('/', [DashboardController::class, 'index'])->middleware('auth','is_active_member', 'verified');     
     Route::get('/password/form', [DashboardController::class, 'form_password'])->middleware('auth', 'verified');     
     Route::post('/password/change', [DashboardController::class, 'change_password'])->middleware('auth','verified');
     Route::get('/event-participant', [ParticipantController::class, 'index_event_participant'])->middleware('auth','verified', 'is_admin'); 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use Validator;
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Uuid;
 use App\Models\Event;
@@ -10,6 +11,7 @@ use App\Models\Pendaftaran;
 use App\Models\Registration;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
 use libphonenumber\PhoneNumberUtil;
 use App\Http\Controllers\Controller;
 use libphonenumber\PhoneNumberFormat;
@@ -19,24 +21,39 @@ use Illuminate\Validation\ValidationException;
 
 class ParticipantController extends Controller
 {
-    public function index_unpaid(Request $request) {
+    public function index_unpaid(Request $request)
+    {
         $search = $request->search;
+        $today = Carbon::now();
 
         $pendaftaran = User::select(
             'users.*',
-            'orders.amount',            
-            'users.email_verified_at',
-        )->leftJoin('orders', 'orders.user_id', 'users.id'
-        )->where('users.status', 'PENDING'
-        )->where('users.registrant_tag', 'REGULAR'
-        )->Where(function ($query) use ($search) {
-            $query->orWhere('users.full_name', 'LIKE', '%'.$search.'%'
-            )->orWhere('users.title', 'LIKE', '%'.$search.'%'
-            )->orWhere('users.club_name', 'LIKE', '%'.$search.'%'
-            )->orWhere('users.district', 'LIKE', '%'.$search.'%');
-        })
-        ->orderBy('users.id')
-        ->paginate(20);
+            // Use an aggregate function for orders.amount
+            DB::raw('MAX(orders.amount) as amount'),
+            'users.email_verified_at'
+        )
+            ->leftJoin('orders', 'orders.user_id', 'users.id')
+            ->where(function ($query) use ($today) {
+                // Condition 1: Regular PENDING users
+                $query->where('users.status', 'PENDING')
+                      ->where('users.registrant_tag', 'REGULAR');
+            })
+            ->orWhere(function ($query) use ($today) {
+                // Condition 2: Inactive Members
+                $query->where('users.registrant_tag', 'MEMBER')
+                      ->whereNotNull('users.member_activate_in')
+                      ->whereNotNull('users.member_over_in')
+                      ->whereDate('users.member_over_in', '<', $today);
+            })
+            ->where(function ($query) use ($search) {
+                $query->orWhere('users.full_name', 'LIKE', '%'.$search.'%')
+                    ->orWhere('users.title', 'LIKE', '%'.$search.'%')
+                    ->orWhere('users.club_name', 'LIKE', '%'.$search.'%')
+                    ->orWhere('users.district', 'LIKE', '%'.$search.'%');
+            })
+            ->groupBy('users.id') // Group by the user's ID to get unique users
+            ->orderBy('users.id')
+            ->paginate(20);
 
         return view('manage.participant.index-unpaid', compact('pendaftaran'));
     }
@@ -60,19 +77,22 @@ class ParticipantController extends Controller
         return view('manage.participant.index-event', compact('events', 'purpose'));
     }
 
-    public function index_paid(Request $request) {
+    public function index_paid(Request $request)
+    {
         $search = $request->search;
+        $today = Carbon::today(); // Get today's date
 
-        $pendaftaran = User::where('users.status', 'SUCCESS'
-        )->where('users.registrant_tag', 'MEMBER'
-        )->Where(function ($query) use ($search) {
-            $query->orWhere('users.full_name', 'LIKE', '%'.$search.'%'
-            )->orWhere('users.title', 'LIKE', '%'.$search.'%'
-            )->orWhere('users.club_name', 'LIKE', '%'.$search.'%'
-            )->orWhere('users.district', 'LIKE', '%'.$search.'%');
-        })
-        ->orderBy('users.id')
-        ->paginate(20);
+        $pendaftaran = User::where('users.status', 'SUCCESS')
+            ->where('users.registrant_tag', 'MEMBER') // Ensure registrant_tag is 'MEMBER'
+            ->where('users.member_over_in', '>=', $today) // Check member_over_in is not in the past
+            ->where(function ($query) use ($search) {
+                $query->orWhere('users.full_name', 'LIKE', '%' . $search . '%')
+                    ->orWhere('users.title', 'LIKE', '%' . $search . '%')
+                    ->orWhere('users.club_name', 'LIKE', '%' . $search . '%')
+                    ->orWhere('users.district', 'LIKE', '%' . $search . '%');
+            })
+            ->orderBy('users.id')
+            ->paginate(20);
 
         return view('manage.participant.index-paid', compact('pendaftaran'));
     }
@@ -80,29 +100,46 @@ class ParticipantController extends Controller
     public function sortPaidParticipantsByDistrict(Request $request, string $district) {
         $search = $request->search;
         
-        $pendaftaran = User::where('users.status', 'SUCCESS'
-        )->where('users.registrant_tag', 'MEMBER'
-        )->where('users.district', $district
-        )->Where(function ($query) use ($search) {
-            $query->orWhere('users.full_name', 'LIKE', '%'.$search.'%'
-            )->orWhere('users.title', 'LIKE', '%'.$search.'%'
-            )->orWhere('users.club_name', 'LIKE', '%'.$search.'%');
-        })
-        ->orderBy('users.id')
-        ->paginate(20);
+        $today = Carbon::now();
+        $pendaftaran = User::where('users.status', 'SUCCESS')
+            ->where('users.registrant_tag', 'MEMBER') // Ensure registrant_tag is 'MEMBER'
+            ->where('users.member_over_in', '>=', $today) // Check member_over_in is not in the past
+            ->where('users.district', $district)
+            ->where(function ($query) use ($search) {
+                $query->orWhere('users.full_name', 'LIKE', '%' . $search . '%')
+                    ->orWhere('users.title', 'LIKE', '%' . $search . '%')
+                    ->orWhere('users.club_name', 'LIKE', '%' . $search . '%')
+                    ->orWhere('users.district', 'LIKE', '%' . $search . '%');
+            })
+            ->orderBy('users.id')
+            ->paginate(20);
 
         return view('manage.participant.index-paid', compact('pendaftaran'));
     }
     
     public function exportUnpaidParticipantsAsPdf() {
+        $today = Carbon::now();
         $participants = User::select(
             'users.*',
-            'orders.amount',            
-            'users.email_verified_at',
-        )->leftJoin('orders', 'orders.user_id', 'users.id'
-        )->where('users.status', 'PENDING'
-        )->where('users.registrant_tag', 'REGULAR'
-        )->orderBy('users.id')->get();
+            // Use an aggregate function for orders.amount
+            DB::raw('MAX(orders.amount) as amount'),
+            'users.email_verified_at'
+        )
+            ->leftJoin('orders', 'orders.user_id', 'users.id')
+            ->where(function ($query) use ($today) {
+                // Condition 1: Regular PENDING users
+                $query->where('users.status', 'PENDING')
+                      ->where('users.registrant_tag', 'REGULAR');
+            })
+            ->orWhere(function ($query) use ($today) {
+                // Condition 2: Inactive Members
+                $query->where('users.registrant_tag', 'MEMBER')
+                      ->whereNotNull('users.member_activate_in')
+                      ->whereNotNull('users.member_over_in')
+                      ->whereDate('users.member_over_in', '<', $today);
+            })
+            ->groupBy('users.id') // Group by the user's ID to get unique users
+            ->orderBy('users.id')->get();
 
         if (!$participants) {
             abort(404, 'Member not found');
@@ -128,10 +165,13 @@ class ParticipantController extends Controller
 
     public function exportPaidAsPdfParticipantsByDistrict(string $district) {
         
-        $participants = User::where('users.status', 'SUCCESS'
-        )->where('users.registrant_tag', 'MEMBER'
-        )->where('users.district', $district
-        )->orderBy('users.id')->get();
+        $today = Carbon::now();
+        $participants = User::where('users.status', 'SUCCESS')
+            ->where('users.registrant_tag', 'MEMBER') // Ensure registrant_tag is 'MEMBER'
+            ->where('users.member_over_in', '>=', $today) // Check member_over_in is not in the past
+            ->where('users.district', $district)
+            ->orderBy('users.id')
+            ->get();
 
         if (!$participants) {
             abort(404, 'Member not found');
@@ -145,9 +185,12 @@ class ParticipantController extends Controller
     }
 
     public function exportPaidParticipantsAsPdf() {
-        $participants = User::where('users.status', 'SUCCESS'
-        )->where('users.registrant_tag', 'MEMBER'
-        )->orderBy('users.id')->get();
+        $today = Carbon::now();
+        $participants = User::where('users.status', 'SUCCESS')
+            ->where('users.registrant_tag', 'MEMBER') // Ensure registrant_tag is 'MEMBER'
+            ->where('users.member_over_in', '>=', $today) // Check member_over_in is not in the past
+            ->orderBy('users.id')
+            ->get();
 
         $district = "All";
 

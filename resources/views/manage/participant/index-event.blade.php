@@ -13,7 +13,7 @@
     </div>
 @endif
 
-<h1 class="h3 mb-2 text-gray-800">Pilih Event</h1>
+<h1 class="h3 mb-2" style="color: black">Pilih Event</h1>
 
 @if($events->count() > 0)
 <div class="row">
@@ -21,7 +21,7 @@
     <div class="col-md-12">
         <div class="card w-100">
         <div class="card-body">
-            <h5 class="card-title">{{$event->event_name}}</h5>
+            <h5 class="card-title" style="color: black">{{$event->event_name}}</h5>
             <!-- <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> -->
             @if($purpose == "1") 
                 <a href="/dashboard/participants/event/{{$event->id}}" class="btn btn-primary">See Details</a>

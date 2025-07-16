@@ -70,7 +70,7 @@
             <div class="mt-3 text-primary bold d-flex justify-content-end px-3">
                 <div class="row justify-content-around">
                     <div class="col-sm-6 col-md-6 col-lg-8 d-flex flex-column justify-content-center text-end mb-2">
-                        Belum Memiliki Akun?
+                        Don't have an account yet?
                     </div>
                     <div class="col-sm-6 col-md-6 col-lg-4 text-end">
                         <a href="/register/create" class="btn text-light bold" style="background: #5CA4B8;">Join Membership</a>
